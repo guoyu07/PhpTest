@@ -378,10 +378,37 @@
             echo '</p><hr/>';
             require 'kkk.inc.php';
             echo '<p><span class="red">变量名区分大小写,函数名不区分</span></p><hr/>';
-            function aa(){
-                echo '2123';
+            function func1() {
+                echo '当前传入了func_num_args():' . func_num_args() . ' 个参数<br/>第一个参数是func_get_args()[0]= ' . func_get_args()[0] . '<br/>'
+                . '第三个参数为 func_get_arg(2): ' . func_get_arg(2) . '<br/>';
             }
-              
+            echo '<p><span class="red">获取函数传入参数</span> func_num_args():返回传入参数个数--func_get_arg(下标)<br/>'
+            . '执行func1(520,13,14)后:<br/>';
+            func1(520, 13, 14);
+            echo '</p><hr/>';
+            $glo = '111';
+            function func2() {
+                $temp1=$GLOBALS['glo'];
+                global $glo;
+                $glo = '222';
+                return $temp1;
+            }
+           $use_glo=func2();
+            echo'<p><span class="red">函数内部使用和定义全局变量</span> $GLOBAL[\'name\']使用全局变量,global $name;定义全局变量<br/>'
+            . '当前$glo=\'111\',执行func2()后: $glo= ' . $glo . ' 函数内部使用全部变量$GLOBALS[\'glo\']= '.$use_glo.'</p><hr/>';
+            112;
+
+
+
+
+
+
+
+
+
+
+
+
             
             
             
@@ -389,7 +416,21 @@
             
             
             
-            $end = 1;
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            $end;
             ?>
         </div>
     </body>
