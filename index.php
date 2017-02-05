@@ -1,3 +1,20 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Gist
+ @buffge
+ Watch 0
+  Star 0
+  Fork 0 buffge/PhpTest
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Pulse  Graphs  Settings
+Branch: test Find file Copy pathPhpTest/index.php
+195b2f4  an hour ago
+@buffge buffge 玩蛇
+1 contributor
+RawBlameHistory     
+425 lines (386 sloc)  25.4 KB
 <!DOCTYPE html>
 <!--
 <#日期 = "2017-2-2">
@@ -11,7 +28,6 @@
         <title>php笔记</title>
         <style>body{font:16px/1.5 'Arial','Microsoft YaHei','Arial Narrow'}.red{color:red;}.margin_30{margin: 0px auto 0px 30px;}
             p{margin: 10px 0px;}#array_count_values{border: 1px solid #000;text-align: center;border-collapse:collapse;}#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}
-
         </style>
     </head>
     <body>
@@ -379,46 +395,58 @@
             echo '</p><hr/>';
             require 'kkk.inc.php';
             echo '<p><span class="red">变量名区分大小写,函数名不区分</span></p><hr/>';
-            echo 'hello world 12';
+            echo 'hello world';
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             $end = 1;
             ?>
         </div>
     </body>
 </html>
+
