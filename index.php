@@ -379,7 +379,7 @@
             echo '</p><hr/>';
             require 'kkk.inc.php';
             echo '<p><span class="red">变量名区分大小写,函数名不区分</span></p><hr/>';
-            echo 'hello world ';
+            echo 'hello world 12';
         
 
 
