@@ -378,10 +378,10 @@
             echo '</p><hr/>';
             require 'kkk.inc.php';
             echo '<p><span class="red">变量名区分大小写,函数名不区分</span></p><hr/>';
-            function test() {
-                
+            function aa(){
+                echo '2123';
             }
-           
+              
             
             
             
@@ -389,67 +389,7 @@
             
             
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-             $end = 1;
+            $end = 1;
             ?>
         </div>
     </body>
