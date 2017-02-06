@@ -20,7 +20,7 @@
             header{width: 1000px;margin: 15px auto;text-align: center;}.red{color:red;}.margin_30{margin: 0px auto 0px 30px;}
             p{margin: 10px 0px;}#array_count_values{border: 1px solid #000;text-align: center;border-collapse:collapse;
             }#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}.mar_l_30{margin-left: 30px;}.purple{color:#9c27b0;}
-            .question{display: inline-block;text-align: center;color: #4caf50;width: 100%;}
+            .question{display: inline-block;text-align: center;color: #4caf50;width: 100%;}.trorfal{color: blue;}
         </style>
     </head>
     <body>
@@ -526,8 +526,7 @@
             }
             echo'<span class="red mar_l_30">静态方法</span> :意思就是没有实例化这个对象就可以直接用类中的这个方法;<br/>'
             . '现在没有实例化class cat;直接echo cat::speak();= ' . cat::speak() . '<br/>'
-            . '类中的const常量也可以未经实例化就直接调用 比如echo cat::DEFAULT_NAME;= ' . cat::DEFAULT_NAME . '<br/>'
-            . '<span class="question">静态方法变量继承之后好像还是以最父级算例如子类中在静态方法中调用get_class()还是显示父类名</span><br/>';
+            . '类中的const常量也可以未经实例化就直接调用 比如echo cat::DEFAULT_NAME;= ' . cat::DEFAULT_NAME . '<br/>';
             echo '<span class="red mar_l_30">接口</span> : interface 接口名{ 定义常量以及需要实现的方法}----<span class="purple">接口可以继承多个接口</span><br/>'
             . '实现接口 class A implements 接口1,2,3{..}<br/>定义一个car 类, 3个接口 高 中 低档类型.奥迪需要继承全部接口,奥拓只需继承 低档的接口<br/>';
             //低档车接口
@@ -562,6 +561,17 @@
                 function __get($name) {
                     return isset($this->$name) ? $this->$name : null;
                 }
+                static function classtype() {
+                    return __CLASS__;
+                }
+                public static function check() {
+                    $type = static::classtype(); //延迟绑定静态类名
+                    $check_car_function = ['sleep', 'attack'];
+                    foreach ($check_car_function as $value) {
+                        echo method_exists($type, $value) ? '能' . $value . '&nbsp;' : '不能' . $value . '&nbsp;';
+                    }
+                    echo ' 最高速度是 ' . $type::SPEED . ' 重量为' . $type::$weight_s . '吨<br/>';
+                }
             }
             //奥拓类
             class aotuo extends car implements low_grade_car {
@@ -569,13 +579,8 @@
                 public function drive() {
                     return '我正在已' . $this->speed . '速度开车';
                 }
-                public static function check() {
-                    $type = isset($this) ? get_class($this) : get_class(); //返回类名
-                    $check_car_function = ['sleep', 'attack'];
-                    foreach ($check_car_function as $value) {
-                        echo method_exists($type, $value) ? '能' . $value . '&nbsp;' : '不能' . $value . '&nbsp;';
-                    }
-                    echo ' 最高速度是 ' . $type::SPEED . ' 重量为' . $type::$weight_s . '吨<br/>';
+                static function classtype() {
+                    return __CLASS__;
                 }
             }
             //本田类
@@ -587,13 +592,8 @@
                 public function sleep() {
                     return '窗户已经关好了,可以睡觉了';
                 }
-                public static function check() {
-                    $type = isset($this) ? get_class($this) : get_class();
-                    $check_car_function = ['sleep', 'attack'];
-                    foreach ($check_car_function as $value) {
-                        echo method_exists($type, $value) ? '能' . $value . '&nbsp;' : '不能' . $value . '&nbsp;';
-                    }
-                    echo ' 最高速度是 ' . $type::SPEED . ' 重量为' . $type::$weight_s . '吨<br/>';
+                static function classtype() {
+                    return __CLASS__;
                 }
             }
             //奥迪类
@@ -606,15 +606,10 @@
                     return '窗户已经关好了,可以睡觉了';
                 }
                 public function attack($target) {
-                    return '正在撞 '.$target;
+                    return '正在撞 ' . $target;
                 }
-                public static function check() {
-                    $type = isset($this) ? get_class($this) : get_class();
-                    $check_car_function = ['sleep', 'attack'];
-                    foreach ($check_car_function as $value) {
-                        echo method_exists($type, $value) ? '能' . $value . '&nbsp;' : '不能' . $value . '&nbsp;';
-                    }
-                    echo ' 最高速度是 ' . $type::SPEED . ' 重量为' . $type::$weight_s . '吨<br/>';
+                static function classtype() {
+                    return __CLASS__;
                 }
             }
             echo '现在未实例化aodi类,执行aodi::check();检查车配置 : method_exists(\'aodi\',\'sleep&attack\')<br/>'
@@ -631,8 +626,38 @@
             echo '$aodi_1执行drive()方法: ' . $aoti_1->drive()
             . '<br/>$bentian_1执行sleep()方法 : ' . $bentian_1->sleep()
             . '<br/>$aodi_1执行attack(\'$bentian_1\')方法 : ' . $aoti_1->attack('$bentian_1') . '这辆车<br/>';
-
-
+            echo'<span class="red mar_l_30">检查对象是否属于某个类</span>: $a instanceof dog,检查$a是否属于dog类,或者继承了dog类,或者实现了dog接口<br/>'
+            . '一号奥迪车是否是aodi类的实例? echo $aoti_1 instanceof aodi?\'是\':\'否\'----------------------------------------'
+            . ($aoti_1 instanceof aodi ? '<span class=\'trorfal\'>是</span>' : '<span class=\'trorfal\'>否</span>') . '<br/>'
+            . '一号本田车是否是aodi类的实例? echo $bentian_1 instanceof aodi?\'是\':\'否\'------------------------------------'
+            . ($bentian_1 instanceof aodi ? '<span class=\'trorfal\'>是</span>' : '<span class=\'trorfal\'>否</span>') . '<br/>'
+            . '一号本田车是否是bentian类的实例? echo $bentian_1 instanceof bentian?\'是\':\'否\'-----------------------------'
+            . ($bentian_1 instanceof bentian ? '<span class=\'trorfal\'>是</span>' : '<span class=\'trorfal\'>否</span>') . '<br/>'
+            . '一号本田车是否继承了car类? echo $bentian_1 instanceof car?\'是\':\'否\'------------------------------------------'
+            . ($bentian_1 instanceof car ? '<span class=\'trorfal\'>是</span>' : '<span class=\'trorfal\'>否</span>') . '<br/>'
+            . '一号本田车是否实现了high_grade_car接口? echo $bentian_1 instanceof high_grade_car?\'是\':\'否\'-------------'
+            . ($bentian_1 instanceof high_grade_car ? '<span class=\'trorfal\'>是</span>' : '<span class=\'trorfal\'>否</span>') . '<br/>'
+            . '一号本田车是否实现了medium_grade_car接口? echo $bentian_1 instanceof medium_grade_car?\'是\':\'否\'-----'
+            . ($bentian_1 instanceof medium_grade_car ? '<span class=\'trorfal\'>是</span>' : '<span class=\'trorfal\'>否</span>') . '<br/>';
+            class A1 {
+                static $className;
+                static function getname() {
+                    static::$className = __CLASS__;
+                    return static::$className;
+                }
+                static function bind() {
+                    return static::getname(); //使用static 就是延迟静态绑定,等到执行bind再绑定getname
+                }
+            }
+            class B1 extends A1 {
+                static function getname() {
+                    static::$className = __CLASS__;
+                    return static::$className;
+                }
+            }
+            echo '<span class="red mar_l_30">延迟静态绑定</span>继承父类的,延迟绑定父类中的静态属性<br/>'
+            . '没有延迟绑定时候B1类获取$className= A1<br/>延迟绑定后:<br/>';
+            echo '$className= ' . B1::bind() . '<br/>';
 
 
 
