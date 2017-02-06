@@ -9,18 +9,31 @@
     <head>
         <meta charset=UTF-8">
         <title>php笔记</title>
-        <style>body{font:16px/1.5 'Arial','Microsoft YaHei','Arial Narrow'}.red{color:red;}.margin_30{margin: 0px auto 0px 30px;}
-            p{margin: 10px 0px;}#array_count_values{border: 1px solid #000;text-align: center;border-collapse:collapse;}#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}
+        <style>
+            body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0} 
+            body{font:16px/1.5 "Microsoft Yahei", 微软雅黑, arial,"宋体";background:#fff;-webkit-text-size-adjust:100%;} 
+            a{color:#2d374b;text-decoration:none} a:hover{text-decoration:underline} em{font-style:normal} 
+            li{list-style:none} img{border:0;vertical-align:middle} table{border-collapse:collapse;border-spacing:0} 
+            p{word-wrap:break-word}input[type=text]{border: 1px #ccc solid;border-radius: 2px;}
+            /******************+++++++++++++STRAT++++++++++++++++*********************/
+            #main{width: 1000px;height: 9000px;margin: 50px auto 0px auto;border: 1px solid #ccccff;padding: 5px 10px;}
+            header{width: 1000px;margin: 0 auto;text-align: center;}.red{color:red;}.margin_30{margin: 0px auto 0px 30px;}
+            p{margin: 10px 0px;}#array_count_values{border: 1px solid #000;text-align: center;border-collapse:collapse;
+            }#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}
         </style>
     </head>
     <body>
-        <div style="width: 1000px;height: 6000px;margin: 50px auto 0px auto;border: 1px solid #ccccff;padding: 5px 10px;">
+        <header>
+            <h1>PHP 学习笔记</h1>
+        </header>
+        <article id="main">
             <?php
+            require('include/buff.name.php'); //命名空间
             echo '<p><span class="red">多行注释</span>/*statement*/</p>'; /* 多行注释 */
             echo '<p><span class="red">单行注释</span>//statement</p>'; //单行注释
             echo '<p><span class="red">单行注释</span> #statement</p>' . '<hr/>'; #单行注释
-            echo '<p><span class="red">显示时间</span>: ' . date('Y\年n\月j\日H:i:s D') . '---date(&apos;代码标示&apos;)Y:年 n:月 j:日 H:小时 i:分钟 s:秒 D:星期几</p>'
-            . '<p>字符前加上\.如果是写t要写成\\t.因为\t是特殊字符</p><hr/>';
+            echo '<p><span class="red">显示时间</span>: ' . date('Y\年n\月j\日H:i:s D') . '<br/>date(&apos;代码标示&apos;)Y:年 n:月 j:日 H:小时 i:分钟 s:秒 D:星期几'
+            . '字符前加上\.如果是写t要写成\\t.因为\t是特殊字符</p><hr/>';
             $string = 'hello world!';
             echo '<p>单引号中显示$string ' . "双引号中显示$string</p><hr/>";
             echo '<p>php中标识符区分大小写 $a和$A不是一个变量.但是函数名不区分大小写</p><hr/>';
@@ -29,7 +42,8 @@
             echo '<p><span class="red">强制类型转换</span>$a=12;$str_a=(string)$a;强制将$a转换成字符串 gettype($str_a)=' . gettype($str_a) .
             '---<span class="red">获取变量类型</span>gettype(element)</p><hr/>';
             echo '<p><span class="red">定义常量</span>define(&apos;name&apos;,value[,false|true])'
-            . ' false表示区分大小写----const name; const用于类中 define用于全局,define也可以用于字符串 代码段<br/>';
+            . ' false表示区分大小写----const name; const用于类中 define用于全局,define也可以用于字符串 代码段;<br/>'
+            . '在命名空间中const只在命名空间有效,define 全局有效';
             define('PI', 3.1415926, FALSE);
             $q = 0;
             class pi {
@@ -56,7 +70,8 @@
             $quot = 'hello';
             $quot1 = $quot;
             $quot2 = &$quot;
-            echo '<p><span class="red">地址引用符<b>&</b></span>&nbsp;$quot=&apos;hello,&apos;$quot1=$quot;$quot2=&$quot,现在$quot1= ' . $quot1 . ',$quot2= ' . $quot2;
+            echo '<p><span class="red">地址引用符<b>&</b></span>&nbsp;$quot=&apos;hello,&apos;$quot1=$quot;$quot2=&$quot,'
+            . '现在$quot1= ' . $quot1 . ',$quot2= ' . $quot2;
             $quot .= 'world';
             echo '<br/>$quot.=&apos;&nbsp;world&apos;之后$quot1= ' . $quot1 . '&nbsp;$quot2= ' . $quot2 . '&nbsp;赋值时开辟新的内存,引用时传递地址<hr/>';
             $number_format = 12345.146;
@@ -83,7 +98,8 @@
                 echo '<p class="margin_30">' . $fun[$i] . '()---' . $fun_zh[$i] . ':&nbsp;' . $$temp . '</p>';
             }
             echo '<hr/>';
-            echo '<p><span class="red">判断变量是否已定义并且不为null</span>--isset(变量1,2,3...)~~~<span class="red">判断变量是否未定义或者为0</span>---当前$num2=0;$num3未定义<br/>';
+            echo '<p><span class="red">判断变量是否已定义并且不为null</span>--isset(变量1,2,3...)~~~~'
+            . '<span class="red">判断变量是否未定义或者为0</span>---当前$num2=0;$num3未定义<br/>';
             $num2 = 0;
             echo 'isset($num2):&nbsp;' . (isset($num2) ? 1 : 0) . '<br/>';
             echo 'empty($num2):&nbsp;' . (empty($num2) ? 1 : 0) . '<br/>';
@@ -117,8 +133,10 @@
                 flock($fp, LOCK_UN);
                 fclose($fp);
             }
-            echo '<p><span class="red">文件读操作</span>:fopen("$doc_root/../logs/newlog.txt", \'rb\').fgets(资源,length)读取一行,feof(资源)判断是否是文件末尾,fclose()关闭文件</p><hr/>';
-            echo '<p><span class="red">检查文件是否存在</span> file_exists("$doc_root/../logs/newlog.txt")= ' . (file_exists("$doc_root/../logs/newlog.txt") ? '存在' : '不存在') . '</p><hr/>';
+            echo '<p><span class="red">文件读操作</span>:fopen("$doc_root/../logs/newlog.txt", \'rb\').fgets(资源,length)读取一行,'
+            . 'feof(资源)判断是否是文件末尾,fclose()关闭文件</p><hr/>';
+            echo '<p><span class="red">检查文件是否存在</span> file_exists("$doc_root/../logs/newlog.txt")= '
+            . (file_exists("$doc_root/../logs/newlog.txt") ? '存在' : '不存在') . '</p><hr/>';
             echo '<p><span class="red">检查文件大小(字节)</span> filesize("$doc_root/../logs/newlog.txt")= '
             . filesize("$doc_root/../logs/newlog.txt") . '字节 <span class="red">删除文件</span> unlink(adress)</p><hr/>';
             $arr = range(1, 10, 0.5);
@@ -143,7 +161,8 @@
             $value = 'value';
             echo '<p><span class="red">数组指针操作</span> $arr2=[1,2,3,4]<br/>
                     current($arr2)=  返回数组中的当前单元 ' . current($arr2) . '<br/>
-                    each($arr2)[\'value\']返回数组中当前的键&apos;key&apos;／值&apos;value&apos;对并将数组指针向前移动一步 each($arr2)[\'value\']=' . each($arr2)[$value] . '<br/>';
+                    each($arr2)[\'value\']返回数组中当前的键&apos;key&apos;／值&apos;value&apos;对并将数组指针向前移动一步 each($arr2)[\'value\']='
+            . each($arr2)[$value] . '<br/>';
             next($arr2);
             echo'next($arr2)后将数组中的内部指针向前移动一位 current($arr2)= ' . current($arr2) . '<br/>';
             prev($arr2);
@@ -163,15 +182,15 @@
             echo '</p><hr/>';
             $arr4 = ['T', 'S', 'O', 'P'];
             sort($arr4);
-            echo '<p><span class="red">数组排序</span>sort()<span class="red">升序排序</span>从小到大 rsort()降序排序.现在数组为$arr4 = [\'T\', \'S\', \'O\', \'P\'];<br/>'
-            . 'sort($arr4)后: $arr4= ';
+            echo '<p><span class="red">数组排序</span>sort()<span class="red">升序排序</span>从小到大 rsort()降序排序.现在数组为$arr4 = '
+            . '[\'T\', \'S\', \'O\', \'P\'];<br/>sort($arr4)后: $arr4= ';
             for ($i = 0; $i < 4; $i++) {
                 echo $arr4[$i] . '&nbsp;';
             }
             echo '<br/>';
             $arr5 = ['z' => 3, 'q' => 2, 's' => 4, 'l' => 1];
-            echo 'asort()<span class="red">按关联数组的值排序</span>  ksort() <span class="red">按关联数组的键排序</span> 现在 $arr5' . "=['z'=>3,'q'=>2,'s'=>4,'l'=>1];<br/>"
-            . 'asort($arr5)后 $arr5= ';
+            echo 'asort()<span class="red">按关联数组的值排序</span>  ksort() <span class="red">按关联数组的键排序</span> 现在 $arr5'
+            . "=['z'=>3,'q'=>2,'s'=>4,'l'=>1];<br/>asort(\$arr5)后 \$arr5= ";
             asort($arr5);
             foreach ($arr5 as $key => $value) {
                 echo '&apos;' . $key . '&apos;=>' . $value . '&nbsp;';
@@ -227,7 +246,8 @@
             }
             echo '</p><hr/>';
             $arr10 = file("$doc_root/../logs/newlog.txt");
-            echo '<p><span class="red">打开文件复制到数组</span> file(地址[,标记])<br/>$arr10=file("$doc_root/../logs/newlog.txt")--$arr10的第一行为: ' . $arr10[0] . '</p><hr/>';
+            echo '<p><span class="red">打开文件复制到数组</span> file(地址[,标记])<br/>$arr10=file("$doc_root/../logs/newlog.txt")--$arr10的第一行为: '
+            . $arr10[0] . '</p><hr/>';
             $data = "foo:*:1023:1000::/home/foo:/bin/sh";
             echo '<p><span class="red">字符串分割为数组</span>explode(分隔符,字符串)当前$data=\'foo:*:1023:1000::/home/foo:/bin/sh\'<br/>';
             $data_new = explode(':', $data);
@@ -317,14 +337,16 @@
             }
             echo'</p><hr/>';
             echo '<p><span class="red">字符串长度</span>strlen(\'buffge\')= ' . strlen('buffge') . '</p><hr/>';
-            echo '<p><span class="red">查找字符串</span><br/>strstr(\'heloolo\',\'l\')= ' . strstr('heloolo', 'l') . ' &nbsp;如果存在一个查询字符串则返回查询的字符串,如果有多个则返回第一个查询字符串后面的所有;'
-            . '<br/>stristr()就是不区分大小写;strrchr()只返回最后一个要查询的字符串<b>并且needle只接受一个字符</b> strrchr(\'hahaha\',\'h\')= ' . strrchr('hahaha', 'h')
-            . '<br/>needle可以为ASCll码 比如 10=\\n,39=\\\',9=\\t等等</p><hr/>';
+            echo '<p><span class="red">查找字符串</span><br/>strstr(\'heloolo\',\'l\')= ' . strstr('heloolo', 'l') .
+            ' &nbsp;如果存在一个查询字符串则返回查询的字符串,如果有多个则返回第一个查询字符串后面的所有;'
+            . '<br/>stristr()就是不区分大小写;strrchr()只返回最后一个要查询的字符串<b>并且needle只接受一个字符</b> strrchr(\'hahaha\',\'h\')= '
+            . strrchr('hahaha', 'h') . '<br/>needle可以为ASCll码 比如 10=\\n,39=\\\',9=\\t等等</p><hr/>';
             echo '<p><span class="red">查询字符串出现的位置</span>strpos(haystack,needle,开始查询的位置): 字符串首次出现的位置,strrpos()表示最后一次出现的位置;<br/>'
             . 'strpos(\'hello world\',\'o\',5)= ' . strpos('hello world', 'o', 5) . '</p><hr/>';
             $arr22 = '吴伟是个呆逼,很sb,还很2b!';
             $arr23 = ['呆逼', 'sb', '2b'];
-            echo '<p><span class="red">子字符串替换函数</span>str_replace($arr23,\'**\',$arr22,$num4)= ' . str_replace($arr23, '**', $arr22, $num4) . ' 其中优雅词汇共被替换了' . $num4 . '次.</p><hr/>';
+            echo '<p><span class="red">子字符串替换函数</span>str_replace($arr23,\'**\',$arr22,$num4)= '
+            . str_replace($arr23, '**', $arr22, $num4) . ' 其中优雅词汇共被替换了' . $num4 . '次.</p><hr/>';
             $var = 'ABCDEFGH:/MNRPQR/';
             echo "<p><span class='red'>替换字符串的子串</span>substr_replace(haystack,needle,开始位置,长度);<br/>原始值:$ var= $var<br/>";
             /* 这两个例子使用 "bob" 替换整个 $var。 */
@@ -376,7 +398,7 @@
                 echo '$str3[' . $key . '] = ' . $value . '<br/>';
             }
             echo '</p><hr/>';
-            require 'kkk.inc.php';
+            require '/include/kkk.inc.php';
             echo '<p><span class="red">变量名区分大小写,函数名不区分</span></p><hr/>';
             function func1() {
                 echo '当前传入了func_num_args():' . func_num_args() . ' 个参数<br/>第一个参数是func_get_args()[0]= ' . func_get_args()[0] . '<br/>'
@@ -388,15 +410,70 @@
             echo '</p><hr/>';
             $glo = '111';
             function func2() {
-                $temp1=$GLOBALS['glo'];
+                $temp1 = $GLOBALS['glo'];
                 global $glo;
                 $glo = '222';
                 return $temp1;
             }
-           $use_glo=func2();
+            $use_glo = func2();
             echo'<p><span class="red">函数内部使用和定义全局变量</span> $GLOBAL[\'name\']使用全局变量,global $name;定义全局变量<br/>'
-            . '当前$glo=\'111\',执行func2()后: $glo= ' . $glo . ' 函数内部使用全部变量$GLOBALS[\'glo\']= '.$use_glo.'</p><hr/>';
-            112;
+            . '当前$glo=\'111\',执行func2()后: $glo= ' . $glo . ' 函数内部使用全部变量$GLOBALS[\'glo\']= ' . $use_glo . '</p><hr/>';
+            function reverse_str(&$param) {
+                $param2 = substr($param, 0, 1);
+                if (strlen($param) > 0) {
+                    reverse_str(substr($param, 1));
+                    $param3 = substr($param, 1);
+                    $param3 .= $param2;
+                }
+                if (isset($param3)) {
+                    $param = $param3;
+                }
+            }
+            $str4 = 'buffge';
+            reverse_str($str4);
+            echo '<p><span class="red">递归函数</span>: 颠倒一个字符串  当前$str4=\'buffge\'</br>reverse_str($str4)后:<br/>'
+            . '$str4= ' . $str4 . '<br/><hr/>';
+            const STR5 = '少壮不努力,老大徒伤悲';
+            use buff as b;
+            function weight($value) {
+                return "大陆的{$value}斤是 " . (500 * $value) . '克.';
+            }
+            echo '<p><span class="red">命名空间</span> 当前脚本中const STR5=\'少壮不努力,老大徒伤悲\';输出STR5= ' . STR5
+            . '<br/>echo buff\STR5= ' . buff\STR5 . '<br/> use 空间名 as 别名:<br/>use buff as b 后: echo buff\STR5===echo b\STR5<br/><br/>'
+            . '当前脚本中运行函数 weight(5)输出为: ' . weight(5) . '<br/>echo b\weight(5)= ' . b\weight(5) . '<br/></p><hr/>';
+            /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
+             *                                 类,对象                                          * 
+             * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+
+
+
+
+
+
+
+
+
+            
+            
+            
+            
+            
+            
+            
+            
+
+            /* 类 属性的操作
+             * 类常量
+             * 类方法的调用
+             * 继承
+             * 访问修饰符
+             * 静态方法
+             * 类型提示 
+             * 延迟静态绑定
+             * 对象克隆
+             * 抽象类   
+             */
 
 
 
@@ -409,30 +486,83 @@
 
 
 
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             $end;
             ?>
-        </div>
+        </article>
     </body>
 </html>
 
