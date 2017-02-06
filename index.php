@@ -19,7 +19,7 @@
             #main{width: 1000px;height: 9000px;margin: 50px auto 0px auto;border: 1px solid #ccccff;padding: 5px 10px;}
             header{width: 1000px;margin: 0 auto;text-align: center;}.red{color:red;}.margin_30{margin: 0px auto 0px 30px;}
             p{margin: 10px 0px;}#array_count_values{border: 1px solid #000;text-align: center;border-collapse:collapse;
-            }#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}
+            }#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}.mar_l_30{margin-left: 30px;}.purple{color:#9c27b0;}
         </style>
     </head>
     <body>
@@ -99,7 +99,7 @@
             }
             echo '<hr/>';
             echo '<p><span class="red">判断变量是否已定义并且不为null</span>--isset(变量1,2,3...)~~~~'
-            . '<span class="red">判断变量是否未定义或者为0</span>---当前$num2=0;$num3未定义<br/>';
+            . '<span class="red">判断变量是否未定义或者为0</span>empty()---当前$num2=0;$num3未定义<br/>';
             $num2 = 0;
             echo 'isset($num2):&nbsp;' . (isset($num2) ? 1 : 0) . '<br/>';
             echo 'empty($num2):&nbsp;' . (empty($num2) ? 1 : 0) . '<br/>';
@@ -443,25 +443,83 @@
             . '当前脚本中运行函数 weight(5)输出为: ' . weight(5) . '<br/>echo b\weight(5)= ' . b\weight(5) . '<br/></p><hr/>';
             /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
              *                                 类,对象                                          * 
-             * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+             * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+            class dog { //小狗对象的基类
+                protected $color;
+                protected $weight;
+                function __construct($color = 'white', $weight = 5) {
+                    echo '你创建了一只小狗<br/>';
+                    $this->color = $color;
+                    $this->weight = $weight;
+                }
+                function __destruct() {
+                    echo '你销毁了一只狗<br/>';
+                }
+                private function __set($name, $value) {
+                    $this->$name = $value;
+                }
+                private function __get($name) {
+                    return isset($this->$name) ? $this->$name : null;
+                }
+                function speak() {
+                    return '汪汪汪!';
+                }
+                function eat($food) {
+                    return $food === 'dog_bone' ? 'CAO 我才不吃这个呢' : '谢谢主人';
+                }
+            }
+            echo '<p><span class="red">类与对象</span>:<br/>'
+            . '<span class="red mar_l_30">构造函数</span>: $dog1=new dog()后 自动执行dog类中的构造函数:<br/>$dog1=new dog()后 ';
+            $dog1 = new dog();
+            echo '<span class="red mar_l_30">构析函数</span>: 销毁一个对象后自动执行-----<span class="purple">构析函数不能带参数</span><br/>unset($dog1)后 ';
+            unset($dog1);
+            $dog2 = new dog('red');
+            echo '当前小狗对象具有的属性: 颜色,体重; 具有的方法/功能: 叫,吃,获取属性,设置属性;<br/>$dog2=new dog(\'red\')后:'
+            . '<br/>创建了一个红颜色的小狗,体重是默认的5斤.现在使用小狗的方法:<br/>'
+            . '小狗的颜色是: ' . $dog2->color . '<br/>'
+            . '小狗的体重是: ' . $dog2->weight . '<br/>'
+            . '小狗叫:$dog2->speak();--' . $dog2->speak() . '<br/>'
+            . '给小狗吃猪骨头:$dog->eat(\'pig_bone\')--' . $dog2->eat('pig_bone') . '<br/>'
+            . '给小狗吃狗骨头:$dog->eat(\'dog_bone\')--' . $dog2->eat('dog_bone') . '<br/><br/>';
+            class haShiQi extends dog {
+                private $type = 'hashiqi';
+                private $name;
+                function speak() {
+                    return '老子不想叫,给你一个眼神自己体会';
+                }
+                function parSpeak() {
+                    return parent::speak();
+                }
+                function eat($food = '') {
+                    return !empty(trim($food)) ? '放这块我等会吃' : '你要让我吃空气呀?';
+                }
+                private function __set($name, $value) {
+                    $this->$name = $value;
+                }
+                private function __get($name) {
+                    return isset($this->$name) ? $this->$name : null;
+                }
+            }
+            echo '<span class="red mar_l_30">类继承</span>: class haShiQi extends dog{...}--哈士奇对象继承了dog的属性</p>'
+            . "\$dog3=new haShiQi('黑白', '20')后:<br/>";
+            $dog3 = new haShiQi('黑白', '20');
+            echo '小狗的颜色是: ' . $dog3->color . '<br/>'
+            . '小狗的体重是: ' . $dog3->weight . '<br/>'
+            . '小狗叫:$dog2->speak();--' . $dog3->speak() . '<br/>'
+            . '给小狗吃猪骨头:$dog->eat(\'pig_bone\')--' . $dog3->eat('pig_bone') . '<br/>'
+            . '给小狗什么都不吃:$dog->eat()--' . $dog3->eat() . '<br/>';
+            $dog3->name = '智障1号';
+            echo '设置小狗的名字$dog3->__set(\'name\',\'智障1号\')后: 小狗的名字是: ' . $dog3->name . '<br/><br/>'
+            . '调用父类的原始方法parent::函数名(); $dog3->parSpeak();= ' . $dog3->parSpeak() . '<br/><br/>'
+            . '<span class="red mar_l_30">final 禁止继承与重载</span> :<br/>final class A{...}: 类A无法被其他类继承<br/>'
+            . '类中的final function b(){..} : 类中的函数b 无法被子函数覆盖<br/><br/>';
+            echo $_SERVER['PHP_SELF'];
 
 
 
 
 
 
-
-
-
-
-            
-            
-            
-            
-            
-            
-            
-            
 
             /* 类 属性的操作
              * 类常量
