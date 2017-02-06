@@ -658,7 +658,7 @@
             echo '<span class="red mar_l_30">延迟静态绑定</span>继承父类的,延迟绑定父类中的静态属性<br/>'
             . '没有延迟绑定时候B1类获取$className= A1<br/>延迟绑定后:<br/>';
             echo '$className= ' . B1::bind() . '<br/>';
-
+            140;
 
 
 
