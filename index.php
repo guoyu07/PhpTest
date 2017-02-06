@@ -2,7 +2,7 @@
 <!--
 <#日期 = "2017-2-2">
 <#时间 = "22:37:29">
-<#人物 = "buff" >
+<#人物 = "buff--www.buffge.com" >
 <#备注 = "php笔记">
 -->
 <html>
@@ -16,10 +16,11 @@
             li{list-style:none} img{border:0;vertical-align:middle} table{border-collapse:collapse;border-spacing:0} 
             p{word-wrap:break-word}input[type=text]{border: 1px #ccc solid;border-radius: 2px;}
             /******************+++++++++++++STRAT++++++++++++++++*********************/
-            #main{width: 1000px;height: 9000px;margin: 50px auto 0px auto;border: 1px solid #ccccff;padding: 5px 10px;}
-            header{width: 1000px;margin: 0 auto;text-align: center;}.red{color:red;}.margin_30{margin: 0px auto 0px 30px;}
+            #main{width: 1000px;height: 9000px;margin: 20px auto 0px auto;border: 1px solid #ccccff;padding: 5px 10px;}
+            header{width: 1000px;margin: 15px auto;text-align: center;}.red{color:red;}.margin_30{margin: 0px auto 0px 30px;}
             p{margin: 10px 0px;}#array_count_values{border: 1px solid #000;text-align: center;border-collapse:collapse;
             }#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}.mar_l_30{margin-left: 30px;}.purple{color:#9c27b0;}
+            .question{display: inline-block;text-align: center;color: #4caf50;width: 100%;}
         </style>
     </head>
     <body>
@@ -443,7 +444,8 @@
             . '当前脚本中运行函数 weight(5)输出为: ' . weight(5) . '<br/>echo b\weight(5)= ' . b\weight(5) . '<br/></p><hr/>';
             /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
              *                                 类,对象                                          * 
-             * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+             * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+            $destruct_control = 0;
             class dog { //小狗对象的基类
                 protected $color;
                 protected $weight;
@@ -453,12 +455,15 @@
                     $this->weight = $weight;
                 }
                 function __destruct() {
+                    if ($GLOBALS['destruct_control'] === 1) {
+                        return;
+                    }//如果不控制一下,脚本结束会自动执行 所有html最下面2行会执行2次
                     echo '你销毁了一只狗<br/>';
                 }
-                private function __set($name, $value) {
+                function __set($name, $value) {
                     $this->$name = $value;
                 }
-                private function __get($name) {
+                function __get($name) {
                     return isset($this->$name) ? $this->$name : null;
                 }
                 function speak() {
@@ -493,14 +498,14 @@
                 function eat($food = '') {
                     return !empty(trim($food)) ? '放这块我等会吃' : '你要让我吃空气呀?';
                 }
-                private function __set($name, $value) {
+                function __set($name, $value) {
                     $this->$name = $value;
                 }
-                private function __get($name) {
+                function __get($name) {
                     return isset($this->$name) ? $this->$name : null;
                 }
             }
-            echo '<span class="red mar_l_30">类继承</span>: class haShiQi extends dog{...}--哈士奇对象继承了dog的属性</p>'
+            echo '<span class="red mar_l_30">类继承</span>: class haShiQi extends dog{...}--哈士奇对象继承了dog的属性'
             . "\$dog3=new haShiQi('黑白', '20')后:<br/>";
             $dog3 = new haShiQi('黑白', '20');
             echo '小狗的颜色是: ' . $dog3->color . '<br/>'
@@ -513,7 +518,131 @@
             . '调用父类的原始方法parent::函数名(); $dog3->parSpeak();= ' . $dog3->parSpeak() . '<br/><br/>'
             . '<span class="red mar_l_30">final 禁止继承与重载</span> :<br/>final class A{...}: 类A无法被其他类继承<br/>'
             . '类中的final function b(){..} : 类中的函数b 无法被子函数覆盖<br/><br/>';
-            echo $_SERVER['PHP_SELF'];
+            class cat {
+                static function speak() {
+                    return '喵喵喵~';
+                }
+                const DEFAULT_NAME = '小白';
+            }
+            echo'<span class="red mar_l_30">静态方法</span> :意思就是没有实例化这个对象就可以直接用类中的这个方法;<br/>'
+            . '现在没有实例化class cat;直接echo cat::speak();= ' . cat::speak() . '<br/>'
+            . '类中的const常量也可以未经实例化就直接调用 比如echo cat::DEFAULT_NAME;= ' . cat::DEFAULT_NAME . '<br/>'
+            . '<span class="question">静态方法变量继承之后好像还是以最父级算例如子类中在静态方法中调用get_class()还是显示父类名</span><br/>';
+            echo '<span class="red mar_l_30">接口</span> : interface 接口名{ 定义常量以及需要实现的方法}----<span class="purple">接口可以继承多个接口</span><br/>'
+            . '实现接口 class A implements 接口1,2,3{..}<br/>定义一个car 类, 3个接口 高 中 低档类型.奥迪需要继承全部接口,奥拓只需继承 低档的接口<br/>';
+            //低档车接口
+            interface low_grade_car {//低档车只要能开就行
+                const SPEED = 100;
+                public function drive();
+            }
+            //中档车接口
+            interface medium_grade_car {//中档车还要能睡觉
+                const SPEED = 200;
+                public function drive();
+                public function sleep();
+            }
+            //高档车接口
+            interface high_grade_car {//高档的要能撞别人
+                const SPEED = 300;
+                public function drive();
+                public function sleep();
+                public function attack($target);
+            }
+            //车基类
+            class car {
+                protected $speed;
+                protected $weight;
+                function __construct() {
+                    $this->speed = $this::SPEED;
+                    $this->weight = $this::$weight_s;
+                }
+                function __set($name, $value) {
+                    $this->$name = $value;
+                }
+                function __get($name) {
+                    return isset($this->$name) ? $this->$name : null;
+                }
+            }
+            //奥拓类
+            class aotuo extends car implements low_grade_car {
+                static $weight_s = 2;
+                public function drive() {
+                    return '我正在已' . $this->speed . '速度开车';
+                }
+                public static function check() {
+                    $type = isset($this) ? get_class($this) : get_class(); //返回类名
+                    $check_car_function = ['sleep', 'attack'];
+                    foreach ($check_car_function as $value) {
+                        echo method_exists($type, $value) ? '能' . $value . '&nbsp;' : '不能' . $value . '&nbsp;';
+                    }
+                    echo ' 最高速度是 ' . $type::SPEED . ' 重量为' . $type::$weight_s . '吨<br/>';
+                }
+            }
+            //本田类
+            class bentian extends car implements medium_grade_car {
+                static $weight_s = 3;
+                public function drive() {
+                    return '我正在已' . $this->speed . '速度开车';
+                }
+                public function sleep() {
+                    return '窗户已经关好了,可以睡觉了';
+                }
+                public static function check() {
+                    $type = isset($this) ? get_class($this) : get_class();
+                    $check_car_function = ['sleep', 'attack'];
+                    foreach ($check_car_function as $value) {
+                        echo method_exists($type, $value) ? '能' . $value . '&nbsp;' : '不能' . $value . '&nbsp;';
+                    }
+                    echo ' 最高速度是 ' . $type::SPEED . ' 重量为' . $type::$weight_s . '吨<br/>';
+                }
+            }
+            //奥迪类
+            class aodi extends car implements high_grade_car {
+                static $weight_s = 5;
+                public function drive() {
+                    return '我正在已' . $this->speed . '速度开车';
+                }
+                public function sleep() {
+                    return '窗户已经关好了,可以睡觉了';
+                }
+                public function attack($target) {
+                    return '正在撞 '.$target;
+                }
+                public static function check() {
+                    $type = isset($this) ? get_class($this) : get_class();
+                    $check_car_function = ['sleep', 'attack'];
+                    foreach ($check_car_function as $value) {
+                        echo method_exists($type, $value) ? '能' . $value . '&nbsp;' : '不能' . $value . '&nbsp;';
+                    }
+                    echo ' 最高速度是 ' . $type::SPEED . ' 重量为' . $type::$weight_s . '吨<br/>';
+                }
+            }
+            echo '现在未实例化aodi类,执行aodi::check();检查车配置 : method_exists(\'aodi\',\'sleep&attack\')<br/>'
+            . '<span class="red">检验类中方法是否存在</span> method_exists():<br/>';
+            echo 'aodi车:&nbsp;';
+            aodi::check();
+            echo'bentian车:&nbsp;';
+            bentian::check();
+            echo'aotuo车:&nbsp;';
+            aotuo::check();
+            echo '<br/>';
+            $aoti_1 = new aodi();
+            $bentian_1 = new bentian();
+            echo '$aodi_1执行drive()方法: ' . $aoti_1->drive()
+            . '<br/>$bentian_1执行sleep()方法 : ' . $bentian_1->sleep()
+            . '<br/>$aodi_1执行attack(\'$bentian_1\')方法 : ' . $aoti_1->attack('$bentian_1') . '这辆车<br/>';
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -617,7 +746,7 @@
 
 
 
-
+            $destruct_control++;
             $end;
             ?>
         </article>
