@@ -9,12 +9,24 @@
     <head>
         <meta charset=UTF-8">
         <title>php笔记</title>
-        <style>body{font:16px/1.5 'Arial','Microsoft YaHei','Arial Narrow'}.red{color:red;}.margin_30{margin: 0px auto 0px 30px;}
-            p{margin: 10px 0px;}#array_count_values{border: 1px solid #000;text-align: center;border-collapse:collapse;}#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}
+        <style>
+            body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0} 
+            body{font:16px/1.5 "Microsoft Yahei", 微软雅黑, arial,"宋体";background:#fff;-webkit-text-size-adjust:100%;} 
+            a{color:#2d374b;text-decoration:none} a:hover{text-decoration:underline} em{font-style:normal} 
+            li{list-style:none} img{border:0;vertical-align:middle} table{border-collapse:collapse;border-spacing:0} 
+            p{word-wrap:break-word}input[type=text]{border: 1px #ccc solid;border-radius: 2px;}
+            /******************+++++++++++++STRAT++++++++++++++++*********************/
+            #main{width: 1000px;height: 9000px;margin: 50px auto 0px auto;border: 1px solid #ccccff;padding: 5px 10px;}
+            header{width: 1000px;margin: 0 auto;text-align: center;}.red{color:red;}.margin_30{margin: 0px auto 0px 30px;}
+            p{margin: 10px 0px;}#array_count_values{border: 1px solid #000;text-align: center;border-collapse:collapse;
+            }#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}
         </style>
     </head>
     <body>
-        <div style="width: 1000px;height: 6000px;margin: 50px auto 0px auto;border: 1px solid #ccccff;padding: 5px 10px;">
+        <header>
+            <h1>PHP 学习笔记</h1>
+        </header>
+        <article id="main">
             <?php
             echo '<p><span class="red">多行注释</span>/*statement*/</p>'; /* 多行注释 */
             echo '<p><span class="red">单行注释</span>//statement</p>'; //单行注释
@@ -376,7 +388,7 @@
                 echo '$str3[' . $key . '] = ' . $value . '<br/>';
             }
             echo '</p><hr/>';
-            require 'kkk.inc.php';
+            require '/include/kkk.inc.php';
             echo '<p><span class="red">变量名区分大小写,函数名不区分</span></p><hr/>';
             function func1() {
                 echo '当前传入了func_num_args():' . func_num_args() . ' 个参数<br/>第一个参数是func_get_args()[0]= ' . func_get_args()[0] . '<br/>'
@@ -388,15 +400,31 @@
             echo '</p><hr/>';
             $glo = '111';
             function func2() {
-                $temp1=$GLOBALS['glo'];
+                $temp1 = $GLOBALS['glo'];
                 global $glo;
                 $glo = '222';
                 return $temp1;
             }
-           $use_glo=func2();
+            $use_glo = func2();
             echo'<p><span class="red">函数内部使用和定义全局变量</span> $GLOBAL[\'name\']使用全局变量,global $name;定义全局变量<br/>'
-            . '当前$glo=\'111\',执行func2()后: $glo= ' . $glo . ' 函数内部使用全部变量$GLOBALS[\'glo\']= '.$use_glo.'</p><hr/>';
-            112;
+            . '当前$glo=\'111\',执行func2()后: $glo= ' . $glo . ' 函数内部使用全部变量$GLOBALS[\'glo\']= ' . $use_glo . '</p><hr/>';
+            function reverse_str(&$param) {
+                $param2 = substr($param, 0, 1);
+                if (strlen($param) > 0) {
+                    reverse_str(substr($param, 1));
+                    $param3= substr($param, 1);
+                    $param3 .= $param2;
+                }
+                if(isset($param3)){
+                    $param=$param3;
+                }
+              
+            }
+            $str4 = 'buffge';
+            reverse_str($str4);
+            echo '<p><span class="red">递归函数</span>: 颠倒一个字符串  当前$str4=\'buffge\'</br>reverse_str($str4)后:<br/>'
+            . '$str4= ' . $str4 . '<br/><hr/>';
+            
 
 
 
@@ -409,30 +437,25 @@
 
 
 
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             $end;
             ?>
-        </div>
+        </article>
     </body>
 </html>
 
