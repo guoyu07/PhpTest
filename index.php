@@ -21,6 +21,7 @@
             p{margin: 10px 0px;}#array_count_values{border: 1px solid #000;text-align: center;border-collapse:collapse;
             }#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}.mar_l_30{margin-left: 30px;}.purple{color:#9c27b0;}
             .question{display: inline-block;text-align: center;color: #4caf50;width: 100%;}.trorfal{color: blue;}
+            #hidden{display: none;}
         </style>
     </head>
     <body>
@@ -30,8 +31,8 @@
         <article id="main">
             <?php
             require('include/buff.name.php'); //命名空间
-            echo '<p><span class="red">多行注释</span>/*statement*/</p>'; /* 多行注释 */
-            echo '<p><span class="red">单行注释</span>//statement</p>'; //单行注释
+            echo "<p><span class='red'>多行注释</span>/*statement*/</p>\r\n"; /* 多行注释 */
+            echo "<p><span class='red'>单行注释</span>//statement</p>\r\n"; //单行注释
             echo '<p><span class="red">单行注释</span> #statement</p>' . '<hr/>'; #单行注释
             echo '<p><span class="red">显示时间</span>: ' . date('Y\年n\月j\日H:i:s D') . '<br/>date(&apos;代码标示&apos;)Y:年 n:月 j:日 H:小时 i:分钟 s:秒 D:星期几'
             . '字符前加上\.如果是写t要写成\\t.因为\t是特殊字符</p><hr/>';
@@ -526,7 +527,7 @@
             }
             echo'<span class="red mar_l_30">静态方法</span> :意思就是没有实例化这个对象就可以直接用类中的这个方法;<br/>'
             . '现在没有实例化class cat;直接echo cat::speak();= ' . cat::speak() . '<br/>'
-            . '类中的const常量也可以未经实例化就直接调用 比如echo cat::DEFAULT_NAME;= ' . cat::DEFAULT_NAME . '<br/>';
+            . '类中的const常量也可以未经实例化就直接调用 比如echo cat::DEFAULT_NAME;= ' . cat::DEFAULT_NAME . '<br/><br/>';
             echo '<span class="red mar_l_30">接口</span> : interface 接口名{ 定义常量以及需要实现的方法}----<span class="purple">接口可以继承多个接口</span><br/>'
             . '实现接口 class A implements 接口1,2,3{..}<br/>定义一个car 类, 3个接口 高 中 低档类型.奥迪需要继承全部接口,奥拓只需继承 低档的接口<br/>';
             //低档车接口
@@ -625,7 +626,7 @@
             $bentian_1 = new bentian();
             echo '$aodi_1执行drive()方法: ' . $aoti_1->drive()
             . '<br/>$bentian_1执行sleep()方法 : ' . $bentian_1->sleep()
-            . '<br/>$aodi_1执行attack(\'$bentian_1\')方法 : ' . $aoti_1->attack('$bentian_1') . '这辆车<br/>';
+            . '<br/>$aodi_1执行attack(\'$bentian_1\')方法 : ' . $aoti_1->attack('$bentian_1') . '这辆车<br/><br/>';
             echo'<span class="red mar_l_30">检查对象是否属于某个类</span>: $a instanceof dog,检查$a是否属于dog类,或者继承了dog类,或者实现了dog接口<br/>'
             . '一号奥迪车是否是aodi类的实例? echo $aoti_1 instanceof aodi?\'是\':\'否\'----------------------------------------'
             . ($aoti_1 instanceof aodi ? '<span class=\'trorfal\'>是</span>' : '<span class=\'trorfal\'>否</span>') . '<br/>'
@@ -638,11 +639,11 @@
             . '一号本田车是否实现了high_grade_car接口? echo $bentian_1 instanceof high_grade_car?\'是\':\'否\'-------------'
             . ($bentian_1 instanceof high_grade_car ? '<span class=\'trorfal\'>是</span>' : '<span class=\'trorfal\'>否</span>') . '<br/>'
             . '一号本田车是否实现了medium_grade_car接口? echo $bentian_1 instanceof medium_grade_car?\'是\':\'否\'-----'
-            . ($bentian_1 instanceof medium_grade_car ? '<span class=\'trorfal\'>是</span>' : '<span class=\'trorfal\'>否</span>') . '<br/>';
+            . ($bentian_1 instanceof medium_grade_car ? '<span class=\'trorfal\'>是</span>' : '<span class=\'trorfal\'>否</span>') . '<br/><br/>';
             echo '<span class="red">函数参数类型限制</span>: function a(HaShiQi $arg){..} 表示接受的参数必须是哈士奇类的实例.如果不是将产生致命错误.<br/>';
             is_Hsq($dog3);
             function is_Hsq(HaShiQi $arg) {
-                echo '你输入了的$dog3是哈士奇类的实例! $arg->type = ' . $arg->type . ' 如果输入的不是哈士奇实例,脚本会终止<br/>';
+                echo '你输入了的$dog3是哈士奇类的实例! $arg->type = ' . $arg->type . ' 如果输入的不是哈士奇实例,脚本会终止<br/><br/>';
             }
             class A1 {
                 static $className;
@@ -680,7 +681,7 @@
             $per1 = new person('buffge', new hand(5));
             $per2 = clone $per1;
 
-            echo '<span class="red">克隆对象</span>  $per2 = clone $per1;<br/>现在:<br/>$per1->finger->finger_num = ' . $per1->finger->finger_num
+            echo '<span class="red mar_l_30">克隆对象</span>  $per2 = clone $per1;<br/>现在:<br/>$per1->finger->finger_num = ' . $per1->finger->finger_num
             . '<br/>$per1->finger->finger_num = ' . $per1->finger->finger_num . '<br/>$per1->name = ' . $per1->name . '<br/>$per2->name = ' . $per1->name
             . '<br/>此时$per1&$per2的$finger都是同一个对象,如果修改了任意一个的手指数量就等于间接修改了 hand实例的值.现在$per2->finger->finger_num= 6;后:<br/>';
             $per2->finger->finger_num = 6;
@@ -701,11 +702,11 @@
             . '<br/>$per2_2->finger->finger_num = ' . $per2_2->finger->finger_num . '<br/>$per2_1->name = ' . $per2_1->name . '<br/>$per2_2->name = ' . $per2_2->name;
             $per2_2->finger->finger_num = 6;
             echo '<br/>修改$per2_2的手指数量---$per2_2->finger->finger_num= 6 ;<br/>现在:<br/>'
-            . '$per2_1->finger->finger_num = ' . $per2_1->finger->finger_num . '<br/>$per2_2->finger->finger_num = ' . $per2_2->finger->finger_num . '<br/>';
-            echo'<span class="red">抽象类</span> : abstract class ClassName{...} ------抽象方法 abstract (protected|public) fun_name(){..} <br/>'
+            . '$per2_1->finger->finger_num = ' . $per2_1->finger->finger_num . '<br/>$per2_2->finger->finger_num = ' . $per2_2->finger->finger_num . '<br/><br/>';
+            echo'<span class="red mar_l_30">抽象类</span> : abstract class ClassName{...} ------抽象方法 abstract (protected|public) fun_name(){..} <br/>'
             . '就是定义一个不能被实例化的类,类中的抽象方法必须要重写.比如定义一个抽象car类.这个car类不能被实例化;<br/>'
             . '但是他里面有一些其他比如奥迪,奔驰,大众等等车类需要重复调用的方法,以及一些必须要实现的方法(抽象方法)'
-            . '<br/>比如 drive(), 就是让后面继承的车必须要有开车这个方法.<br/>';
+            . '<br/>比如 drive(), 就是让后面继承的车必须要有开车这个方法.<br/><br/>';
             class overload {
                 public function __call($name, $arg) {
                     if ($name == 'what') {
@@ -718,26 +719,44 @@
                 }
             }
             $overload1 = new overload;
-            echo '<span class="red">类方法重载</span> __call();'
-            . '<br/>$overload1=new overload; $overload1->what([1]) = ' . $overload1->what([1]) . '<span class="purple">&nbsp;&nbsp;需要被重载的函数在类中不能被定义</span>';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            echo '<span class="red mar_l_30">类方法重载</span> __call();'
+            . '<br/>$overload1=new overload; $overload1->what([1]) = ' . $overload1->what([1])
+            . '<span class="purple">&nbsp;&nbsp;需要被重载的函数在类中不能被定义</span><br/><br/>';
+            class autoload {
+                public function loader() {
+                    
+                }
+                public function __construct() {//设置引入地址,可多个
+                    spl_autoload_register([$this, 'my_autoload1']);
+                    spl_autoload_register([$this, 'my_autoload2']);
+                }
+                function my_autoload1($val) {
+                    $adress = "include/class/{$val}.php";
+                    if (is_file($adress)) {
+                        require $adress;
+                    }
+                }
+                function my_autoload2($val) {
+                    $adress = "include/{$val}.class.php";
+                    if (is_file($adress)) {
+                        require $adress;
+                    }
+                }
+            }
+            $autoload1 = new autoload();
+            $autoload1->loader(new pig(), new bird()); //需要用几个类就引入几个
+            $pig1 = new pig();
+            $bird1 = new bird();
+            echo '<span class="red mar_l_30">自动加载类</span>spl_autoload_register(函数):可以注册多个自动载入;<br/>'
+            . '当前脚本中pig类未定义. new pig后 : 因为当前脚本不存在pig类 所以会自动调用SPL __autoload函数队列中的函数 <br/>'
+            . '$pig1->gettype()= $pig1的类型是 : ' . $pig1->gettype() . '<br/>'
+            . '$bird1->gettype()= $bird1的类型是 : ' . $bird1->gettype() . '<br/>';
+            $info = new ReflectionClass(get_class($pig1));
+            echo '<span class="red mar_l_30">类的反射API</span>ReflectionClass 类: 前面$pig1的原始类文件不在当前脚本中.<br/>'
+            . '使用 $info= new ReflectionClass(get_class($pig1));echo $info;= 太长,放在console里了<br/>';
+            echo '<div id="hidden">' . $info . '</div>'
+            . '<script>var info =document.getElementById( \'hidden\').innerText;console.log("这是$pig1的类信息\n"+info+"$pig1类信息结束\n");</script>';
+//            144 迭代器
 
 
 
