@@ -501,7 +501,7 @@
                     return !empty(trim($food)) ? '放这块我等会吃' : '你要让我吃空气呀?';
                 }
                 function __clone() {
-                    $this->color= clone $this->color;
+                    
                 }
             }
             echo '<span class="red mar_l_30">类继承</span>: class haShiQi extends dog{...}--哈士奇对象继承了dog的属性'
@@ -639,6 +639,11 @@
             . ($bentian_1 instanceof high_grade_car ? '<span class=\'trorfal\'>是</span>' : '<span class=\'trorfal\'>否</span>') . '<br/>'
             . '一号本田车是否实现了medium_grade_car接口? echo $bentian_1 instanceof medium_grade_car?\'是\':\'否\'-----'
             . ($bentian_1 instanceof medium_grade_car ? '<span class=\'trorfal\'>是</span>' : '<span class=\'trorfal\'>否</span>') . '<br/>';
+            echo '<span class="red">函数参数类型限制</span>: function a(HaShiQi $arg){..} 表示接受的参数必须是哈士奇类的实例.如果不是将产生致命错误.<br/>';
+            is_Hsq($dog3);
+            function is_Hsq(HaShiQi $arg) {
+                echo '你输入了的$dog3是哈士奇类的实例! $arg->type = ' . $arg->type . ' 如果输入的不是哈士奇实例,脚本会终止<br/>';
+            }
             class A1 {
                 static $className;
                 static function getname() {
@@ -658,14 +663,75 @@
             echo '<span class="red mar_l_30">延迟静态绑定</span>继承父类的,延迟绑定父类中的静态属性<br/>'
             . '没有延迟绑定时候B1类获取$className= A1<br/>延迟绑定后: ';
             echo '$className= ' . B1::bind() . '<br/><br/>';
-            $dog4 = clone $dog3;
-            echo '<span class="red">克隆对象</span> $dog4 = clone $dog3;<br/>现在$dog3->color= ' . $dog3->color
-            . '<br/>$dog4->color= ' . $dog4->color;
-            $dog3->color = '绿';
-            echo '<br/>$dog3->color = \'绿\' 后: ---$dog4->color = ' . $dog4->color
-            . ''
-            . ''
-            . '';
+            class hand {
+                public $finger_num;
+                public function __construct($value) {
+                    $this->finger_num = $value;
+                }
+            }
+            class person {
+                public $name;
+                public $finger;
+                function __construct($arg, hand $hand) {
+                    $this->name = $arg;
+                    $this->finger = $hand;
+                }
+            }
+            $per1 = new person('buffge', new hand(5));
+            $per2 = clone $per1;
+
+            echo '<span class="red">克隆对象</span>  $per2 = clone $per1;<br/>现在:<br/>$per1->finger->finger_num = ' . $per1->finger->finger_num
+            . '<br/>$per1->finger->finger_num = ' . $per1->finger->finger_num . '<br/>$per1->name = ' . $per1->name . '<br/>$per2->name = ' . $per1->name
+            . '<br/>此时$per1&$per2的$finger都是同一个对象,如果修改了任意一个的手指数量就等于间接修改了 hand实例的值.现在$per2->finger->finger_num= 6;后:<br/>';
+            $per2->finger->finger_num = 6;
+            echo '$per1->finger-finger_num = ' . $per1->finger->finger_num;
+            class hand2 extends hand {
+                
+            }
+            class person2 extends person {
+                public function __clone() {
+                    $this->finger = clone $this->finger;
+                }
+            }
+            $per2_1 = new person2('buffge', new hand2(5));
+            $per2_2 = clone $per2_1;
+            echo '现在新创建hand2 和person2类,在person2类中设置__clone()函数,当person2被克隆时自动调用;<br/> '
+            . '在__clone中直接设置克隆实例的finger实例为本体finger实例的复制值 ,而不是使用本体的引用值.这样修改克隆实例就不会影响到本体<br/>'
+            . '当前$per2_1=new person2(\'buffge\',new hand2(5));$per2_2 =clone $per2_1<br/>信息对比:<br/>$per2_1->finger->finger_num = ' . $per2_1->finger->finger_num
+            . '<br/>$per2_2->finger->finger_num = ' . $per2_2->finger->finger_num . '<br/>$per2_1->name = ' . $per2_1->name . '<br/>$per2_2->name = ' . $per2_2->name;
+            $per2_2->finger->finger_num = 6;
+            echo '<br/>修改$per2_2的手指数量---$per2_2->finger->finger_num= 6 ;<br/>现在:<br/>'
+            . '$per2_1->finger->finger_num = ' . $per2_1->finger->finger_num . '<br/>$per2_2->finger->finger_num = ' . $per2_2->finger->finger_num . '<br/>';
+            echo'<span class="red">抽象类</span> : abstract class ClassName{...} ------抽象方法 abstract (protected|public) fun_name(){..} <br/>'
+            . '就是定义一个不能被实例化的类,类中的抽象方法必须要重写.比如定义一个抽象car类.这个car类不能被实例化;<br/>'
+            . '但是他里面有一些其他比如奥迪,奔驰,大众等等车类需要重复调用的方法,以及一些必须要实现的方法(抽象方法)'
+            . '<br/>比如 drive(), 就是让后面继承的车必须要有开车这个方法.<br/>';
+            class overload {
+                public function __call($name, $arg) {
+                    if ($name == 'what') {
+                        if (is_array($arg)) {
+                            return '这是一个数组';
+                        } elseif (is_string($arg)) {
+                            return '这是一个字符串';
+                        }
+                    }
+                }
+            }
+            $overload1 = new overload;
+            echo '<span class="red">类方法重载</span> __call();'
+            . '<br/>$overload1=new overload; $overload1->what([1]) = ' . $overload1->what([1]) . '<span class="purple">&nbsp;&nbsp;需要被重载的函数在类中不能被定义</span>';
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
