@@ -446,7 +446,8 @@
              *                                 类,对象                                          * 
              * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
             $destruct_control = 0;
-            class dog { //小狗对象的基类
+            //小狗对象的基类
+            class dog {
                 protected $color;
                 protected $weight;
                 function __construct($color = 'white', $weight = 5) {
@@ -486,9 +487,10 @@
             . '小狗叫:$dog2->speak();--' . $dog2->speak() . '<br/>'
             . '给小狗吃猪骨头:$dog->eat(\'pig_bone\')--' . $dog2->eat('pig_bone') . '<br/>'
             . '给小狗吃狗骨头:$dog->eat(\'dog_bone\')--' . $dog2->eat('dog_bone') . '<br/><br/>';
+            //哈士奇类
             class haShiQi extends dog {
-                private $type = 'hashiqi';
-                private $name;
+                protected $type = 'hashiqi';
+                protected $name = '11';
                 function speak() {
                     return '老子不想叫,给你一个眼神自己体会';
                 }
@@ -498,11 +500,8 @@
                 function eat($food = '') {
                     return !empty(trim($food)) ? '放这块我等会吃' : '你要让我吃空气呀?';
                 }
-                function __set($name, $value) {
-                    $this->$name = $value;
-                }
-                function __get($name) {
-                    return isset($this->$name) ? $this->$name : null;
+                function __clone() {
+                    $this->color= clone $this->color;
                 }
             }
             echo '<span class="red mar_l_30">类继承</span>: class haShiQi extends dog{...}--哈士奇对象继承了dog的属性'
@@ -510,14 +509,15 @@
             $dog3 = new haShiQi('黑白', '20');
             echo '小狗的颜色是: ' . $dog3->color . '<br/>'
             . '小狗的体重是: ' . $dog3->weight . '<br/>'
-            . '小狗叫:$dog2->speak();--' . $dog3->speak() . '<br/>'
-            . '给小狗吃猪骨头:$dog->eat(\'pig_bone\')--' . $dog3->eat('pig_bone') . '<br/>'
-            . '给小狗什么都不吃:$dog->eat()--' . $dog3->eat() . '<br/>';
+            . '小狗叫:$dog3->speak();--' . $dog3->speak() . '<br/>'
+            . '给小狗吃猪骨头:$dog3->eat(\'pig_bone\')--' . $dog3->eat('pig_bone') . '<br/>'
+            . '给小狗什么都不吃:$dog3->eat()--' . $dog3->eat() . '<br/>';
             $dog3->name = '智障1号';
-            echo '设置小狗的名字$dog3->__set(\'name\',\'智障1号\')后: 小狗的名字是: ' . $dog3->name . '<br/><br/>'
+            echo '设置小狗的名字$dog3->name = \'智障1号\')后: 小狗的名字是: ' . $dog3->name . '<br/><br/>'
             . '调用父类的原始方法parent::函数名(); $dog3->parSpeak();= ' . $dog3->parSpeak() . '<br/><br/>'
             . '<span class="red mar_l_30">final 禁止继承与重载</span> :<br/>final class A{...}: 类A无法被其他类继承<br/>'
             . '类中的final function b(){..} : 类中的函数b 无法被子函数覆盖<br/><br/>';
+            //车基类
             class cat {
                 static function speak() {
                     return '喵喵喵~';
@@ -656,9 +656,16 @@
                 }
             }
             echo '<span class="red mar_l_30">延迟静态绑定</span>继承父类的,延迟绑定父类中的静态属性<br/>'
-            . '没有延迟绑定时候B1类获取$className= A1<br/>延迟绑定后:<br/>';
-            echo '$className= ' . B1::bind() . '<br/>';
-            140;
+            . '没有延迟绑定时候B1类获取$className= A1<br/>延迟绑定后: ';
+            echo '$className= ' . B1::bind() . '<br/><br/>';
+            $dog4 = clone $dog3;
+            echo '<span class="red">克隆对象</span> $dog4 = clone $dog3;<br/>现在$dog3->color= ' . $dog3->color
+            . '<br/>$dog4->color= ' . $dog4->color;
+            $dog3->color = '绿';
+            echo '<br/>$dog3->color = \'绿\' 后: ---$dog4->color = ' . $dog4->color
+            . ''
+            . ''
+            . '';
 
 
 
