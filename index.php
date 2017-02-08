@@ -31,9 +31,9 @@
         <article id="main">
             <?php
             require('include/buff.name.php'); //命名空间
-            echo "<p><span class='red'>多行注释</span>/*statement*/</p>\r\n"; /* 多行注释 */
+            echo "<p><span class = 'red'>多行注释</span>/* statement */</p>\r\n"; /* 多行注释 */
             echo "<p><span class='red'>单行注释</span>//statement</p>\r\n"; //单行注释
-            echo '<p><span class="red">单行注释</span> #statement</p>' . '<hr/>'; #单行注释
+            echo '<p><span class = "red">单行注释</span> #statement</p>' . '<hr/>'; #单行注释
             echo '<p><span class="red">显示时间</span>: ' . date('Y\年n\月j\日H:i:s D') . '<br/>date(&apos;代码标示&apos;)Y:年 n:月 j:日 H:小时 i:分钟 s:秒 D:星期几'
             . '字符前加上\.如果是写t要写成\\t.因为\t是特殊字符</p><hr/>';
             $string = 'hello world!';
@@ -61,7 +61,7 @@
             echo '$q为全局变量,pi->q为类中变量,先创建一个temp1实体,然后引用$temp1->q.$q=' . $q . ' ++++++++++ temp1->q=' . $temp1->q . '</p><hr/>';
             class static_var {
                 public static $val = 1;
-                public static function set($value) { //静态函数 不需要创建对象就可以用className::functionName() 调用.静态函数中不可以使用$this,只能用self.
+                public static function set($value) { //静态函数 不需要创建对象就可以用className::functionName() 调用.静态函数中不可以使用$this,只能用self::.
                     self::$val += $value;
                 }
             }
@@ -161,9 +161,8 @@
             echo '<hr/>';
             $arr2 = [1, 2, 3, 4];
             $value = 'value';
-            echo '<p><span class="red">数组指针操作</span> $arr2=[1,2,3,4]<br/>
-                    current($arr2)=  返回数组中的当前单元 ' . current($arr2) . '<br/>
-                    each($arr2)[\'value\']返回数组中当前的键&apos;key&apos;／值&apos;value&apos;对并将数组指针向前移动一步 each($arr2)[\'value\']='
+            echo '<p><span class="red">数组指针操作</span> $arr2=[1,2,3,4]<br/>current($arr2)=  返回数组中的当前单元 ' . current($arr2) . '<br/>'
+            . 'each($arr2)[\'value\']返回数组中当前的键&apos;key&apos;／值&apos;value&apos;对并将数组指针向前移动一步 each($arr2)[\'value\']='
             . each($arr2)[$value] . '<br/>';
             next($arr2);
             echo'next($arr2)后将数组中的内部指针向前移动一位 current($arr2)= ' . current($arr2) . '<br/>';
@@ -753,16 +752,27 @@
             . '$bird1->gettype()= $bird1的类型是 : ' . $bird1->gettype() . '<br/>';
             $info = new ReflectionClass(get_class($pig1));
             echo '<span class="red mar_l_30">类的反射API</span>ReflectionClass 类: 前面$pig1的原始类文件不在当前脚本中.<br/>'
-            . '使用 $info= new ReflectionClass(get_class($pig1));echo $info;= 太长,放在console里了<br/>';
-            echo '<div id="hidden">' . $info . '</div>'
-            . '<script>var info =document.getElementById( \'hidden\').innerText;console.log("这是$pig1的类信息\n"+info+"$pig1类信息结束\n");</script>';
-//            144 迭代器
-
-
-
-
-
-
+            . '使用 $info= new ReflectionClass(get_class($pig1));echo $info;= '
+            . '<span class="purple"> 太长不写 this以及此api常用功能 用放在console里了</span><br/><br/><span id="hidden">' . $info . '</span>';
+            require 'public/reflection_api_mes.php';
+            echo '<script>var info =document.getElementById( \'hidden\').innerText,refl="' . $reflection_api_mes
+            . '";console.log("++++++++++++++++++++这是$pig1的类信息++++++++++++++++++++\n"'
+            . '+info+"--------------------$pig1类信息结束--------------------\n'
+            . '++++++++++++++++++++这是反射api基础的的信息++++++++++++++++++++\n"+refl+'
+            . '"--------------------反射api基础的的信息结束--------------------\n");</script>';
+            define('NOW_TIME', date('Y\年n\月j\日H:i:s D', time()));
+            class A2 {
+                public $name = 'A1';
+                public $time = NOW_TIME;
+                public function __toString() {
+                    return var_export($this, true);
+                }
+            }
+            $a2_1 = new A2();
+            echo '<span class="red mar_l_30">__string():将类转换成字符串</span> echo 对象时候自动调用;<br/>'
+            . '<span class="red">输出或返回一个变量的字符串表示</span>: var_export($obj,true/false):false:返回php代码'
+            . 'true:返回变量的表示(字符串值)<br/>$a2_1的类属性为 : ' . $a2_1.'<br/></p><hr/>';
+            
 
 
 
