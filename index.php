@@ -9,20 +9,7 @@
     <head>
         <meta charset=UTF-8">
         <title>php笔记</title>
-        <style>
-            body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0} 
-            body{font:16px/1.5 "Microsoft Yahei", 微软雅黑, arial,"宋体";background:#fff;-webkit-text-size-adjust:100%;} 
-            a{color:#2d374b;text-decoration:none} a:hover{text-decoration:underline} em{font-style:normal} 
-            li{list-style:none} img{border:0;vertical-align:middle} table{border-collapse:collapse;border-spacing:0} 
-            p{word-wrap:break-word}input[type=text]{border: 1px #ccc solid;border-radius: 2px;}
-            /******************+++++++++++++STRAT++++++++++++++++*********************/
-            #main{width: 1000px;height: 9000px;margin: 20px auto 0px auto;border: 1px solid #ccccff;padding: 5px 10px;}
-            header{width: 1000px;margin: 15px auto;text-align: center;}.red{color:red;}.margin_30{margin: 0px auto 0px 30px;}
-            p{margin: 10px 0px;}#array_count_values{border: 1px solid #000;text-align: center;border-collapse:collapse;
-            }#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}.mar_l_30{margin-left: 30px;}.purple{color:#9c27b0;}
-            .question{display: inline-block;text-align: center;color: #4caf50;width: 100%;}.trorfal{color: blue;}
-            #hidden{display: none;}
-        </style>
+        <link rel="stylesheet" type="text/css" href="public/css/style_1.css" >
     </head>
     <body>
         <header>
@@ -771,23 +758,67 @@
             $a2_1 = new A2();
             echo '<span class="red mar_l_30">__string():将类转换成字符串</span> echo 对象时候自动调用;<br/>'
             . '<span class="red">输出或返回一个变量的字符串表示</span>: var_export($obj,true/false):false:返回php代码'
-            . 'true:返回变量的表示(字符串值)<br/>$a2_1的类属性为 : ' . $a2_1.'<br/></p><hr/>';
-            
+            . 'true:返回变量的表示(字符串值)<br/>$a2_1的类属性为 : ' . $a2_1 . '<br/></p><hr/>';
+            try {
+                if (!isset($undefine_1)) {
+                    throw new Exception('$undefine_1变量未定义', 1);
+                }
+            } catch (Exception $e) {
+                echo 'Exception : <br/>错误信息:' . $e->geTMessage() . '<br/>
+                      错误行号 : ' . $e->getLine() . '<br/>
+                      异常脚本文件地址 : ' . $e->getFile() . '<br/>
+                      异常错误代码 : ' . $e->getCode() . '<br/>';
+            }
+            echo '<p><span class="red">异常处理</span> : try{ throw new exception($mes , $e_num ) } catch($e){..}<br/>
+                    现在$undefine_1变量不存在,然后执行 try{如果变量不存在 抛出异常} 处理异常-处理结果如下:<br/>';
+            try {
+                if (!isset($undefine_1)) {
+                    throw new Exception('$undefine_1变量未定义', 1);
+                }
+            } catch (Exception $e) {
+                echo 'Exception : <br/>错误信息:' . $e->geTMessage() . '<br/>
+                      错误行号 : ' . $e->getLine() . '<br/>
+                      异常脚本文件地址 : ' . $e->getFile() . '<br/>
+                      异常错误代码 : ' . $e->getCode() . '<br/>';
+            }
+            echo '<span class="red mar_l_30">自定义异常类</span> 只可以覆盖__string以及新函数;
+            <br/>判断数组以及字符串异常 : <br/>';
+            $arr28 = ['min'];
+            class exception_str extends Exception {
+                function __tostring() {
+                    return $this->message . '不是一个字符串<br/><hr/>';
+                }
+            }
+            try {
+                if (!is_string($arr28)) {
+                    throw new exception_str('$arr28');
+                }
+            } catch (exception_str $e) {
+                echo $e;
+            }
+            /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
+             *                                 mysql                                            * 
+             * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+            echo '<h2 id="mysql">Mysql</h2>';
 
 
 
 
-            /* 类 属性的操作
-             * 类常量
-             * 类方法的调用
-             * 继承
-             * 访问修饰符
-             * 静态方法
-             * 类型提示 
-             * 延迟静态绑定
-             * 对象克隆
-             * 抽象类   
+            /* 主键
+             * 外键
+             * 索引
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
+             * 
              */
+
+
 
 
 
