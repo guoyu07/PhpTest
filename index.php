@@ -800,15 +800,12 @@
              *                                 mysql                                            * 
              * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
             echo '<h2 id="mysql">Mysql</h2>';
-            $mysqli = new mysqli('127.0.0.1', 'buffge', 'wanshe', 'knote');
-            if ($mysqli->connect_error) {
-                echo '连接失败';
-            }
-            $sql = 'select title from books where id=1';
-            $row = $mysqli->query($sql);
-            $result=$row->fetch_assoc();
-            echo $result['title'];
-
+            echo '<p><span class="red">连接到数据库</span>';
+            echo '<p><span class="red">Create增</span>';
+            echo '<p><span class="red">Update删</span>';
+            echo '<p><span class="red">Update改</span>';
+            echo '<p><span class="red">Retrieve查</span>';
+            //164  mysql 创建mysql数据库
 
 
 
