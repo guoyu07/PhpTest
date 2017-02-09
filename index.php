@@ -812,6 +812,26 @@ if (!$mysqli->query($sql3)) {
 }
 
 echo '<p><span class="red">Update改</span>';
+echo'<span class="red mar_l_30">修改一行值</span> : 
+    $sql=delete from `temp` where `id`=1<br/>';
+$sql4 = 'delete from `temp` where id=1';
+if (!$mysqli->query($sql4)) {
+    die('<span class="blue">修改一行值失败</span><br/>错误信息 : ' . $mysqli->error);
+}
+echo'<span class="red mar_l_30">修改字段</span> : 
+    $sql=alter table `temp` drop `user`<br/>';
+$sql5 = 'alter table `temp` drop `user`';
+if (!$mysqli->query($sql5)) {
+    die('<span class="blue">修改字段失败</span><br/>错误信息 : ' . $mysqli->error);
+}
+echo'<span class="red mar_l_30">修改表名</span> : 
+    $sql=drop table `temp`<br/>';
+$sql6 = 'drop table `temp`';
+if (!$mysqli->query($sql6)) {
+    die('<span class="blue">删除表失败</span><br/>错误信息 : ' . $mysqli->error);
+}
+
+
 
 echo '<p><span class="red">Retrieve查</span>';
 
