@@ -791,6 +791,7 @@ $mysqli = new mysqli('localhost', 'buffge', 'daimin', 'knote');
 if ($mysqli->connect_errno) {
     die('<span class="blue">链接数据库失败</span><br/>错误信息 : ' . $mysqli->connect_error);
 }
+//++++++++++++++++++++++++++++增 删 改 查 开始+++++++++++++++++++++++++++++++++++
 echo '<p><span class="red">Create增</span> : <br/>
     <span class="red mar_l_30">创建表</span>:
     $sql=\'create table if not exists `temp`(`id` int(9) unsigned auto_increment, primary key(`id`))\'<br/>';
@@ -799,62 +800,90 @@ if (!$mysqli->query($sql)) {
     die('<span class="blue">创建表失败</span><br/>错误信息 : ' . $mysqli->error);
 }
 echo'<span class="red mar_l_30">增加字段</span> : 
-    $sql=\'alter table `temp` add `user` char(10) NOT NULL after `id`\'<br/>';
+    $sql2=\'alter table `temp` add `user` char(10) NOT NULL after `id`\'<br/>';
 $sql2 = 'alter table `temp` add `user` char(10) NOT NULL after `id`';
 if (!$mysqli->query($sql2)) {
     die('<span class="blue">增加字段失败</span><br/>错误信息 : ' . $mysqli->error);
 }
 echo'<span class="red mar_l_30">插入值</span> : 
-    $sql=insert into temp(`id`,`user`) values(1 ,\'buffge\')<br/>';
+    $sql3=insert into temp(`id`,`user`) values(1 ,\'buffge\')<br/>';
 $sql3 = 'insert into `temp`(`id`,`user`) values("1" ,"buffge")';
 if (!$mysqli->query($sql3)) {
     die('<span class="blue">插入值失败</span><br/>错误信息 : ' . $mysqli->error);
 }
 
-echo '<p><span class="red">Update改</span>';
+echo '<p><span class="red">Update改</span><br/>';
 echo'<span class="red mar_l_30">修改一行值</span> : 
-    $sql=delete from `temp` where `id`=1<br/>';
-$sql4 = 'delete from `temp` where id=1';
+    $sql4=UPDATE `temp` set `id`=2 ,`user`="buffge" where `id`=1<br/>';
+$sql4 = 'UPDATE `temp` set `id`=2 ,`user`="daimin" where `id`=1';
 if (!$mysqli->query($sql4)) {
     die('<span class="blue">修改一行值失败</span><br/>错误信息 : ' . $mysqli->error);
 }
 echo'<span class="red mar_l_30">修改字段</span> : 
-    $sql=alter table `temp` drop `user`<br/>';
-$sql5 = 'alter table `temp` drop `user`';
+    $sql5=ALTER TABLE `temp` CHANGE `id` `num` INT(9) UNSIGNED NOT NULL AUTO_INCREMENT,
+    CHANGE `user` `name` CHAR(10) NOT NULL; <br/>';
+$sql5 = 'ALTER TABLE `temp` CHANGE `id` `num` INT(9) UNSIGNED NOT NULL AUTO_INCREMENT,
+    CHANGE `user` `name` CHAR(10) NOT NULL';
 if (!$mysqli->query($sql5)) {
     die('<span class="blue">修改字段失败</span><br/>错误信息 : ' . $mysqli->error);
 }
 echo'<span class="red mar_l_30">修改表名</span> : 
-    $sql=drop table `temp`<br/>';
-$sql6 = 'drop table `temp`';
+        $sql6=alter table `temp` rename `user_messages`;<br/>';
+$sql6 = 'alter table `temp` rename `user_messages`';
 if (!$mysqli->query($sql6)) {
-    die('<span class="blue">删除表失败</span><br/>错误信息 : ' . $mysqli->error);
+    die('<span class="blue">修改表名失败</span><br/>错误信息 : ' . $mysqli->error);
 }
 
-
-
-echo '<p><span class="red">Retrieve查</span>';
-
-echo '<p><span class="red">Update删</span><br/>';
-echo'<span class="red mar_l_30">删除一行值</span> : 
-    $sql=delete from `temp` where `id`=1<br/>';
-$sql4 = 'delete from `temp` where id=1';
-if (!$mysqli->query($sql4)) {
-    die('<span class="blue">删除一行值失败</span><br/>错误信息 : ' . $mysqli->error);
+echo '<p><span class="red">Retrieve查</span><br/>';
+echo'<span class="red mar_l_30">查第一行的name值</span> : 
+    $sql7=select name from user_messages where `num`=2';
+$sql7 = 'select name from user_messages where `num`=2';
+$res=$mysqli->query($sql7);
+if (!$res) {
+    die('<span class="blue">查询第一行值失败</span><br/>错误信息 : ' . $mysqli->error);
 }
+$row=$res->fetch_assoc();
+echo ' -------------name : '.$row['name'].'<br/>';
+
+echo'<span class="red mar_l_30">查询第一行的字段(键)名</span> : 
+    $sql8=select * from user_messages limit 0,1';
+$sql8 = 'select * from user_messages limit 0,1';
+$res2=$mysqli->query($sql8);
+if (!$res2) {
+    die('<span class="blue">查询键名失败</span><br/>错误信息 : ' . $mysqli->error);
+}
+$row2=$res2->fetch_array();
+echo ' -------------键名 : '.$row2[0].'<br/>';
+echo'<span class="red mar_l_30">查询表名</span> : 
+    $sql9=select table_name from information_schema.tables WHERE TABLE_SCHEMA = "knote"';
+$sql9 = 'select table_name from information_schema.tables WHERE TABLE_SCHEMA = "knote"';
+$res3=$mysqli->query($sql9);
+if (!$res3) {
+    die('<span class="blue">查询表名失败</span><br/>错误信息 : ' . $mysqli->error);
+}
+$row3=$res3->fetch_array();
+echo ' ----表名 : '.$row3[0].'<br/>';//因为数据库还有其他表所有第一个为books
+
+echo '<p><span class="red">Delete删</span><br/>';
 echo'<span class="red mar_l_30">删除字段</span> : 
-    $sql=alter table `temp` drop `user`<br/>';
-$sql5 = 'alter table `temp` drop `user`';
-if (!$mysqli->query($sql5)) {
+    $sql11=alter table `user_messages` drop `name`<br/>';
+$sql10 = 'alter table `user_messages` drop `name`';
+if (!$mysqli->query($sql10)) {
     die('<span class="blue">删除字段失败</span><br/>错误信息 : ' . $mysqli->error);
 }
+echo'<span class="red mar_l_30">删除一行值</span> : 
+    $sql10=delete from `user_messages` where `num`=2<br/>';
+$sql11 = 'delete from `user_messages` where num=2';
+if (!$mysqli->query($sql11)) {
+    die('<span class="blue">删除一行值失败</span><br/>错误信息 : ' . $mysqli->error);
+}
 echo'<span class="red mar_l_30">删除表</span> : 
-    $sql=drop table `temp`<br/>';
-$sql6 = 'drop table `temp`';
-if (!$mysqli->query($sql6)) {
+    $sql12=drop table `user_messages`<br/>';
+$sql12 = 'drop table `user_messages`';
+if (!$mysqli->query($sql12)) {
     die('<span class="blue">删除表失败</span><br/>错误信息 : ' . $mysqli->error);
 }
-//164  mysql 创建mysql数据库                                         
+//-------------------------增 删 改 查 结束-----------------------------                                     
 
 
 
