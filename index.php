@@ -489,7 +489,7 @@ echo '设置小狗的名字$dog3->name = \'智障1号\')后: 小狗的名字是:
  . '调用父类的原始方法parent::函数名(); $dog3->parSpeak();= ' . $dog3->parSpeak() . '<br/><br/>'
  . '<span class="red mar_l_30">final 禁止继承与重载</span> :<br/>final class A{...}: 类A无法被其他类继承<br/>'
  . '类中的final function b(){..} : 类中的函数b 无法被子函数覆盖<br/><br/>';
-//车基类
+//猫基类
 class cat {
     static function speak() {
         return '喵喵喵~';
@@ -744,16 +744,7 @@ $a2_1 = new A2();
 echo '<span class="red mar_l_30">__string():将类转换成字符串</span> echo 对象时候自动调用;<br/>'
  . '<span class="red">输出或返回一个变量的字符串表示</span>: var_export($obj,true/false):false:返回php代码'
  . 'true:返回变量的表示(字符串值)<br/>$a2_1的类属性为 : ' . $a2_1 . '<br/></p><hr/>';
-try {
-    if (!isset($undefine_1)) {
-        throw new Exception('$undefine_1变量未定义', 1);
-    }
-} catch (Exception $e) {
-    echo 'Exception : <br/>错误信息:' . $e->geTMessage() . '<br/>
-          错误行号 : ' . $e->getLine() . '<br/>
-          异常脚本文件地址 : ' . $e->getFile() . '<br/>
-          异常错误代码 : ' . $e->getCode() . '<br/>';
-}
+
 echo '<p><span class="red">异常处理</span> : try{ throw new exception($mes , $e_num ) } catch($e){..}<br/>
         现在$undefine_1变量不存在,然后执行 try{如果变量不存在 抛出异常} 处理异常-处理结果如下:<br/>';
 try {
@@ -785,14 +776,14 @@ try {
  *                                 mysql                                            * 
  * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 echo '<h2 id="mysql">Mysql</h2>';
-echo "<p><span class='red'>连接到数据库</span> :
-\$mysqli=new mysqli('localhost','buffge','daimin','knote');<br/>";
+echo "<p><span><span class='red'>连接到数据库</span> :
+\$mysqli=new mysqli('localhost','buffge','daimin','knote');<br/></span>";
 $mysqli = new mysqli('localhost', 'buffge', 'daimin', 'knote');
 if ($mysqli->connect_errno) {
     die('<span class="blue">链接数据库失败</span><br/>错误信息 : ' . $mysqli->connect_error);
 }
 //++++++++++++++++++++++++++++增 删 改 查 开始+++++++++++++++++++++++++++++++++++
-echo '<p><span class="red">Create增</span> : <br/>
+echo '<span><span class="red">Create增</span> : <br/>
     <span class="red mar_l_30">创建表</span>:
     $sql=\'create table if not exists `temp`(`id` int(9) unsigned auto_increment, primary key(`id`))\'<br/>';
 $sql = 'create table if not exists `temp`(`id` int(9) unsigned auto_increment, primary key(`id`))';
@@ -811,8 +802,8 @@ $sql3 = 'insert into `temp`(`id`,`user`) values("1" ,"buffge")';
 if (!$mysqli->query($sql3)) {
     die('<span class="blue">插入值失败</span><br/>错误信息 : ' . $mysqli->error);
 }
-
-echo '<p><span class="red">Update改</span><br/>';
+echo '</span>';
+echo '<span><span class="red">Update改</span><br/>';
 echo'<span class="red mar_l_30">修改一行值</span> : 
     $sql4=UPDATE `temp` set `id`=2 ,`user`="buffge" where `id`=1<br/>';
 $sql4 = 'UPDATE `temp` set `id`=2 ,`user`="daimin" where `id`=1';
@@ -833,8 +824,8 @@ $sql6 = 'alter table `temp` rename `user_messages`';
 if (!$mysqli->query($sql6)) {
     die('<span class="blue">修改表名失败</span><br/>错误信息 : ' . $mysqli->error);
 }
-
-echo '<p><span class="red">Retrieve查</span><br/>';
+echo'</span>';
+echo '<span><span class="red">Retrieve查</span><br/>';
 echo'<span class="red mar_l_30">查第一行的name值</span> : 
     $sql7=select name from user_messages where `num`=2';
 $sql7 = 'select name from user_messages where `num`=2';
@@ -862,17 +853,17 @@ if (!$res3) {
     die('<span class="blue">查询表名失败</span><br/>错误信息 : ' . $mysqli->error);
 }
 $row3=$res3->fetch_array();
-echo ' ----表名 : '.$row3[0].'<br/>';//因为数据库还有其他表所有第一个为books
+echo ' ----表名 : '.$row3[0].'<br/></span>';//因为数据库还有其他表所有第一个为books
 
-echo '<p><span class="red">Delete删</span><br/>';
+echo '<span><span class="red">Delete删</span><br/>';
 echo'<span class="red mar_l_30">删除字段</span> : 
-    $sql11=alter table `user_messages` drop `name`<br/>';
+    $sql10=alter table `user_messages` drop `name`<br/>';
 $sql10 = 'alter table `user_messages` drop `name`';
 if (!$mysqli->query($sql10)) {
     die('<span class="blue">删除字段失败</span><br/>错误信息 : ' . $mysqli->error);
 }
 echo'<span class="red mar_l_30">删除一行值</span> : 
-    $sql10=delete from `user_messages` where `num`=2<br/>';
+    $sql11=delete from `user_messages` where `num`=2<br/>';
 $sql11 = 'delete from `user_messages` where num=2';
 if (!$mysqli->query($sql11)) {
     die('<span class="blue">删除一行值失败</span><br/>错误信息 : ' . $mysqli->error);
@@ -883,7 +874,10 @@ $sql12 = 'drop table `user_messages`';
 if (!$mysqli->query($sql12)) {
     die('<span class="blue">删除表失败</span><br/>错误信息 : ' . $mysqli->error);
 }
+echo '<br/></span>';
 //-------------------------增 删 改 查 结束-----------------------------                                     
+echo '<span>mysql 查询语句不区分大小写,数据库和表的名称区分 <br/></span></p><hr/>';
+//324 php 高级程序技术
 
 
 
@@ -899,26 +893,12 @@ if (!$mysqli->query($sql12)) {
 
 
 
-
-
-/* 创建表
- * 创建键 
- * 插入值
- * 更改值
- * 删除值
- * 查询
- * 
- * 
- * 
- * 
- * 
- * 
- * 
+/*  
  * 主键
  * 外键
  * 索引
  * 备份 还原
- *
+ * 
  * 
  * 
  * 
