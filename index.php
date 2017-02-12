@@ -702,13 +702,13 @@ class autoload {
         spl_autoload_register([$this, 'my_autoload2']);
     }
     function my_autoload1($val) {
-        $adress = "include/class/{$val}.php";
+        $adress = "include/class/{$val}.class.php";
         if (is_file($adress)) {
             require $adress;
         }
     }
     function my_autoload2($val) {
-        $adress = "include/{$val}.class.php";
+        $adress = "include/{$val}.php";
         if (is_file($adress)) {
             require $adress;
         }
@@ -726,7 +726,7 @@ $info = new ReflectionClass(get_class($pig1));
 echo '<span class="red mar_l_30">类的反射API</span>ReflectionClass 类: 前面$pig1的原始类文件不在当前脚本中.<br/>'
  . '使用 $info= new ReflectionClass(get_class($pig1));echo $info;= '
  . '<span class="purple"> 太长不写 this以及此api常用功能 用放在console里了</span><br/><br/><span id="hidden">' . $info . '</span>';
-require 'public/reflection_api_mes.php';
+require 'include/reflection_api_mes.inc.php';
 echo '<script>var info =document.getElementById( \'hidden\').innerText,refl="' . $reflection_api_mes
  . '";console.log("++++++++++++++++++++这是$pig1的类信息++++++++++++++++++++\n"'
  . '+info+"--------------------$pig1类信息结束--------------------\n'
@@ -779,7 +779,7 @@ echo '<h2 id="mysql">Mysql</h2>';
 echo "<p><span><span class='red'>连接到数据库</span> :
 \$mysqli=new mysqli('localhost','buffge','daimin','knote');<br/></span>";
 $mysqli = new mysqli('localhost', 'buffge', 'daimin', 'knote');
-if ($mysqli->connect_errno) {
+if ($mysqli->connect_errno) {//有错误返回作物代号,没错误返回0
     die('<span class="blue">链接数据库失败</span><br/>错误信息 : ' . $mysqli->connect_error);
 }
 //++++++++++++++++++++++++++++增 删 改 查 开始+++++++++++++++++++++++++++++++++++
@@ -829,31 +829,31 @@ echo '<span><span class="red">Retrieve查</span><br/>';
 echo'<span class="red mar_l_30">查第一行的name值</span> : 
     $sql7=select name from user_messages where `num`=2';
 $sql7 = 'select name from user_messages where `num`=2';
-$res=$mysqli->query($sql7);
+$res = $mysqli->query($sql7);
 if (!$res) {
     die('<span class="blue">查询第一行值失败</span><br/>错误信息 : ' . $mysqli->error);
 }
-$row=$res->fetch_assoc();
-echo ' -------------name : '.$row['name'].'<br/>';
+$row = $res->fetch_assoc();
+echo ' -------------name : ' . $row['name'] . '<br/>';
 
 echo'<span class="red mar_l_30">查询第一行的字段(键)名</span> : 
     $sql8=select * from user_messages limit 0,1';
 $sql8 = 'select * from user_messages limit 0,1';
-$res2=$mysqli->query($sql8);
+$res2 = $mysqli->query($sql8);
 if (!$res2) {
     die('<span class="blue">查询键名失败</span><br/>错误信息 : ' . $mysqli->error);
 }
-$row2=$res2->fetch_array();
-echo ' -------------键名 : '.$row2[0].'<br/>';
+$row2 = $res2->fetch_array();
+echo ' -------------键名 : ' . $row2[0] . '<br/>';
 echo'<span class="red mar_l_30">查询表名</span> : 
     $sql9=select table_name from information_schema.tables WHERE TABLE_SCHEMA = "knote"';
 $sql9 = 'select table_name from information_schema.tables WHERE TABLE_SCHEMA = "knote"';
-$res3=$mysqli->query($sql9);
+$res3 = $mysqli->query($sql9);
 if (!$res3) {
     die('<span class="blue">查询表名失败</span><br/>错误信息 : ' . $mysqli->error);
 }
-$row3=$res3->fetch_array();
-echo ' ----表名 : '.$row3[0].'<br/></span>';//因为数据库还有其他表所有第一个为books
+$row3 = $res3->fetch_array();
+echo ' ----表名 : ' . $row3[0] . '<br/></span>'; //因为数据库还有其他表所有第一个为books
 
 echo '<span><span class="red">Delete删</span><br/>';
 echo'<span class="red mar_l_30">删除字段</span> : 
@@ -882,9 +882,17 @@ echo '<span>mysql 查询语句不区分大小写,数据库和表的名称区分 
  * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 ?>
 <h2>php 高级程序技术</h2>
+<iframe id="upload" name="upload">
+    <?php
+    require_once "{$_SERVER['DOCUMENT_ROOT']}/k_note/php/process/upFilePro.php";
+    ?>
+</iframe>
 <?php
-echo '<p><span class="red">文件上传</span></p>';
-
+echo "<p><span class='red'>文件上传</span>:
+    <form action='process/upFilePro.php' target='upload' method='post' enctype='multipart/form-data'>
+      <input type='file' name='userfile[]' multiple='multiple' />
+      <input type='submit' value ='提交'/>
+    </form>";
 
 
 
