@@ -6,13 +6,14 @@
     </head>
     <body>
         <?php
-        require_once "{$_SERVER['DOCUMENT_ROOT']}/k_note/php/function/common.php";
+        require "{$_SERVER['DOCUMENT_ROOT']}/k_note/php/function/common.php";
         /*
           <#日期 = "2017-2-12">
           <#时间 = "14:31:19">
           <#人物 = "buff" >
-          <#备注 = " ">
+          <#备注 = "上传文件处理">
          */
+        $flag = 0;
         foreach ($_FILES['userfile']['error'] as $key => $value) {
             if ($_FILES['userfile']['error'][$key] > 0) {
                 echo 'error:<br/>';
@@ -30,7 +31,7 @@
                     case UPLOAD_ERR_CANT_WRITE:$error = '第' . ++$key . '个文件不能写入磁盘!';
                         break;
                 }
-                echo"<script>alert('" . strip_tags($error) . "');</script>";
+                echo"<script>alert('" . $error . "');</script>";
                 continue;
             }
             if ($_FILES['userfile']['type'][$key] != 'text/plain' &&
@@ -38,25 +39,29 @@
                     $_FILES['userfile']['type'][$key] != 'image/jpeg' &&
                     $_FILES['userfile']['type'][$key] != 'image/png') {
                 $error = $_FILES['userfile']['type'][$key] . '不是正确的文件格式!';
-                echo"<script>alert('" . strip_tags($error) . "');</script>";
+                echo"<script>alert('" . $error . "');</script>";
                 continue;
             }
             //本地文件名,因为windows系统默认是gbk 所以转换为gbk码
+            $base_user_filename=basename($_FILES['userfile']['name'][$key]);//去除文件中的/\
             $user_filename = iconv('utf-8', 'gbk', $_SERVER["DOCUMENT_ROOT"]
-                    . '/../uploads/' . $_FILES['userfile']['name'][$key]);
+                    . '/../uploads/' . $base_user_filename);
             if (is_uploaded_file($_FILES['userfile']['tmp_name'][$key])) {
+                if (file_exists($user_filename)) {
+                    $user_filename=change_file_name($base_user_filename);//更换名称
+                }
                 if (!move_uploaded_file($_FILES['userfile']['tmp_name'][$key], $user_filename)) {
                     $error = '<br/>存储文件失败!';
-                    echo"<script>alert('" . strip_tags($error) . "');</script>";
+                    echo"<script>alert('" . $error . "');</script>";
                     continue;
                 }
             } else {
                 $error = '你上传的文件不是有效的';
-                echo"<script>alert('" . strip_tags($error) . "');</script>";
+                echo"<script>alert('" . $error . "');</script>";
                 continue;
             }
-            $file = file_get_contents($user_filename);
             if ($_FILES['userfile']['type'][$key] == 'text/plain') {
+                $file = file_get_contents($user_filename);
                 characet($file); //转换字符编码为utf-8
                 if (rand(0, 1)) {
                     $file2 = htmlspecialchars($file); //转义所有html特殊字符 ， & " ' < >
@@ -66,6 +71,10 @@
                 }
                 file_put_contents($user_filename, $file2);
             }
+            $flag++;
+        }
+        if ($flag === count($_FILES[userfile]['name'])) {
+            echo"<script>parent.successful();</script>";
         }
         ?>
     </body>

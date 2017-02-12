@@ -887,13 +887,15 @@ echo '<span>mysql 查询语句不区分大小写,数据库和表的名称区分 
     require_once "{$_SERVER['DOCUMENT_ROOT']}/k_note/php/process/upFilePro.php";
     ?>
 </iframe>
+
 <?php
 echo "<p><span class='red'>文件上传</span>:
     <form action='process/upFilePro.php' target='upload' method='post' enctype='multipart/form-data'>
       <input type='file' name='userfile[]' multiple='multiple' />
-      <input type='submit' value ='提交'/>
+      <input type='submit' value ='提交'/>&nbsp;<span id='is_success'>提交成功</span>
     </form>";
-
+//339 文件上传常规结束,
+//目录函数,与文件系统的交互 ,使用程序执行函数,与环境变量交互暂未学习windows不支持
 
 
 
@@ -921,5 +923,14 @@ $end;
 ?>
 </article>
 </body>
+<script>
+    //判断文件上传是否成功
+    function successful() {
+        document.getElementById('is_success').style.display='inline';
+        setTimeout(function(){
+            document.getElementById('is_success').style.display='none';
+        },3000);
+    }
+</script>
 </html>
 
