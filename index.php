@@ -946,9 +946,21 @@ echo "<span class='red mar_l_30'>使用FTP镜像一个文件:<br/></span>
 echo "<span class='red mar_l_30'>防止脚本超时</span><br/>
     <span>脚本默认执行时间是30s.在脚本某处加入se_time_limit(30);就是在此处延时30s 有时候下载需要很长时间</span>";
 echo "</p><hr/>";
-
-
-
+$nowtime = time();
+echo "<p><span class='red'>时间与日期管理:</span><br/>
+    <span class='mar_l_30'>获取unix时间戳: time()---{$nowtime}</span><br/>
+    <span class='mar_l_30'>将时间转换为unix时间戳:
+    mktime(小时,分钟,秒,月,日,年.)--mktime(19,30,0,3,22,1995)=" . mktime(19, 30, 0, 3, 22, 1995) . "</span><br/>
+    <span class='mar_l_30'>获取时间:\$today=getdate()返回数组如下:<br/>";
+    $today=getdate();
+    foreach ($today as $key => $value) {
+    echo "<span class='mar_l_30'>\$today['".$key."']===={$value}<br/></span>";
+}
+    echo"</span><br/><span class='purple'>一些不常用的日期函数没学</span></p><hr/>";
+echo"<p><span class='red'>创建图像</span> <span class='purple'>暂时pass</span></p><hr/>";
+echo"<p><span class='red'>会话控制</span>:<br/>
+";
+//389 cookie &seesion 
 
 
 
