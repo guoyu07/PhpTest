@@ -890,15 +890,62 @@ echo '<span>mysql 查询语句不区分大小写,数据库和表的名称区分 
 
 <?php
 echo "<p><span class='red'>文件上传</span>:
-    <form action='process/upFilePro.php' target='upload' method='post' enctype='multipart/form-data'>
-      <input type='file' name='userfile[]' multiple='multiple' />
-      <input type='submit' value ='提交'/>&nbsp;<span id='is_success'>提交成功</span>
-    </form>";
-//339 文件上传常规结束,
-//目录函数,与文件系统的交互 ,使用程序执行函数,与环境变量交互暂未学习windows不支持
-
-
-
+    <form action='process/upFilePro.php?upload=1' target='upload' method='post' enctype='multipart/form-data'>
+    <input type='file' name='userfile[]' multiple='multiple' />
+    <input type='submit' value ='提交'/>&nbsp;<span id='is_success'>提交成功</span>
+    </form>
+    <span>注意点: <br/></span>
+    <span>1.input 中添加multiple='multiple'可上传多个文件.<br/></span>
+    <span>2.name名称后面加上[]设置上传文件为数组.<br/></span>
+    <span>3.上传文件时 form表单中 要添加编码格式为不编码 即:enctype='multipary/form-data'.<br/></span>
+    <span>4.处理上传文件的表单可以用iframe 写在一起,这样上传时候就不会跳转,设置form的target为此框架名.<br/></span>
+    <span>5.框架中处理确认全部上传成功则调用父框架的js函数,显示上传成功.<br/></span>
+    <span class='purple'>上传未设置成事务,有一个上传失败,其他的还是能上传成功.<br/></span>
+    <span>6.上传时先判断是否上传成功,然后判断是否为所允许的上传类型,接着判断是否为通过http上传的文件<br/></span>
+    <span>最后将临时文件更名并转存到要存放的目录下.(转存到windows系统要iconv(原编码,新编码,字符串))<br/></span>
+    <span>将原utf-8编码转换为gbk才能在windows下正确存储中文名</span></p><hr/>
+";
+$url = 'http://www.buffge.com/index.html?c=main#arcticle';
+$newurl = parse_url($url);
+echo"<p><span class='red'>网络协议和协议函数:<br/></span>
+     <span><span class='red mar_l_30'>解析url函数 :</span>parse_url() 返回url的各部分的数值的数组</span>
+     <span>\$url='http://www.buffge.com/index.html?c=main#arcticle'<br/></span>
+     <span class='mar_l_30'>\$newurl=parse_url(\$url)---输出如下:<br/></span>";
+foreach ($newurl as $key => $value) {
+    echo "<span class='mar_l_30'> \$newurl ['" . $key . '\']----' . $value . '<br/></span>';
+}
+echo '<br/>';
+/* FTP 镜像操作
+ * $ftpadress = 'bxu994238728.my3w.com';
+ * $ftpuser = 'bxu994238728';
+ * $ftppass = 'buffge';
+ * $ftp_remote_file = '/htdocs/temp/temp.txt';
+ * $ftp_loacl_file = $_SERVER['DOCUMENT_ROOT'] . '/../uploads/temp.txt';
+ * $ftpcon = ftp_connect($ftpadress);
+ * if (!$ftpcon) {
+ *    echo '链接ftp失败!<br/>';
+ * }
+ * $ftp_res = ftp_login($ftpcon, $ftpuser, $ftppass);
+ * if (!$ftp_res) {
+ *    echo '登录ftp主机失败!';
+ * }
+ * $remote_file_time = filemtime($ftp_remote_file);
+ * $oacl_file_time = filemtime($ftp_loacl_file);
+ * if ($remote_file_time > $loacl_file_time) {
+ *    $ftp_local = fopen($ftp_loacl_file, 'w');
+ *    if (!$ftp_mirror_success = ftp_fget($ftpcon, $ftp_local, $ftp_remote_file, FTP_ASCII )) {
+ *        echo '镜像失败!';
+ *    }
+ *    fclose($ftp_local);
+ *    echo '镜像成功!';
+ * }
+ * ftp_close($ftpcon);
+ * FTP 镜像操作结束 */
+echo "<span class='red mar_l_30'>使用FTP镜像一个文件:<br/></span> 
+    <span class='purple'>镜像失败,不会使用被动模式,能连接,但是无法将文件读取到本地,windows防火墙不会搞<br/></span>";
+echo "<span class='red mar_l_30'>防止脚本超时</span><br/>
+    <span>脚本默认执行时间是30s.在脚本某处加入se_time_limit(30);就是在此处延时30s 有时候下载需要很长时间</span>";
+echo "</p><hr/>";
 
 
 
@@ -926,10 +973,10 @@ $end;
 <script>
     //判断文件上传是否成功
     function successful() {
-        document.getElementById('is_success').style.display='inline';
-        setTimeout(function(){
-            document.getElementById('is_success').style.display='none';
-        },3000);
+        document.getElementById('is_success').style.display = 'inline';
+        setTimeout(function () {
+            document.getElementById('is_success').style.display = 'none';
+        }, 3000);
     }
 </script>
 </html>
