@@ -965,14 +965,15 @@ echo"<p><span class='red'>创建图像</span> <span class='purple'>暂时pass</s
 //    echo"falid";
 //}
 
-echo"<p><span class='red'>会话控制</span>:<br/><span class='red'>cookie:<br/></span>";
+echo"<p><span class='red'>会话控制</span>:<br/>
+        <span class='red'>cookie:<br/></span>";
 if (isset($_COOKIE['username'])) {
     echo "<span>欢迎您{$_COOKIE['username']}!</span>"
     . "<a class='cookieo' href='javascript:;' target='upload'>退出</a>";
     $cookie_js = "var cookiein = document.getElementsByClassName('cookieo')[0];
         cookiein.onclick = function () {
-           this.href = 'function/cookie.php?out=out&y=' + window.pageYOffset; 
-        };";//window.pageYOffset===window.scrollY;这2个是别名,但是ie不支持scrollY
+           this.href = 'process/cookie.php?out=out&y=' + window.pageYOffset; 
+        };"; //window.pageYOffset===window.scrollY;这2个是别名,但是ie不支持scrollY
     if (isset($scrollY)) {
         $cookie_js .= "(function(){window.scrollTo(0,{$scrollY})})();";
     }
@@ -981,15 +982,19 @@ if (isset($_COOKIE['username'])) {
     . "<a class='cookiei' href='javascript:;' target='upload'>登录</a></span>";
     $cookie_js = "var cookieout = document.getElementsByClassName('cookiei')[0];
         cookieout.onclick = function () {
-         this.href = 'function/cookie.php?k=buff鸽&y=' + window.pageYOffset;  
+         this.href = 'process/cookie.php?k=buff鸽&y=' + window.pageYOffset;  
         };";
     if (isset($scrollY)) {
         $cookie_js .= "(function(){window.scrollTo(0,{$scrollY})})();";
     }
 }
-
-
-
+$_SESSION['username']='buff鸽';
+echo"<br/><span class='red'>session:<br/></span>
+<span><a style='color:blue;' href='process/session.php' title'session测试'>点击进入欢迎页</a>-----</span>    
+<span><a style='color:blue;' href='process/destruct_ses.php' target='upload'>注销会话</a>-----<br/></span>    
+<span>直接进入session.php 进不去,当点击进入欢迎页可以进入<br/>因为此页面已经开启会话,注销后,此页面也不可以进入</span>    
+</p><hr/>";
+//399其他有用的特性
 
 
 

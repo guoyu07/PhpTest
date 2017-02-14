@@ -1,9 +1,10 @@
 <?php
 //用来返回上一个页面的滚动条的位置,用完就删除cookie
-if(isset($_COOKIE['y'])){
-    $scrollY=$_COOKIE['y'];
+if (isset($_COOKIE['y'])) {
+    $scrollY = $_COOKIE['y'];
     setcookie("y", "", 0, '/k_note/php/', '127.0.0.1');
 }
+session_start();
 ?>
 <!DOCTYPE html>
 <!--
@@ -24,4 +25,3 @@ if(isset($_COOKIE['y'])){
         </header>
         <article id='main'>
             <div id="add_height"></div>
-            
