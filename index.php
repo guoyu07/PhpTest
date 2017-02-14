@@ -952,15 +952,43 @@ echo "<p><span class='red'>时间与日期管理:</span><br/>
     <span class='mar_l_30'>将时间转换为unix时间戳:
     mktime(小时,分钟,秒,月,日,年.)--mktime(19,30,0,3,22,1995)=" . mktime(19, 30, 0, 3, 22, 1995) . "</span><br/>
     <span class='mar_l_30'>获取时间:\$today=getdate()返回数组如下:<br/>";
-    $today=getdate();
-    foreach ($today as $key => $value) {
-    echo "<span class='mar_l_30'>\$today['".$key."']===={$value}<br/></span>";
+$today = getdate();
+foreach ($today as $key => $value) {
+    echo "<span class='mar_l_30'>\$today['" . $key . "']===={$value}<br/></span>";
 }
-    echo"</span><br/><span class='purple'>一些不常用的日期函数没学</span></p><hr/>";
+echo"</span><br/><span class='purple'>一些不常用的日期函数没学</span></p><hr/>";
 echo"<p><span class='red'>创建图像</span> <span class='purple'>暂时pass</span></p><hr/>";
-echo"<p><span class='red'>会话控制</span>:<br/>
-";
-//389 cookie &seesion 
+//mail
+//if (mail("1515888956@qq.com", "测试标题", "你好这是正文", "From: buff鸽网络<admin@buffge.com>")) {
+//    echo "success!";
+//} else {
+//    echo"falid";
+//}
+
+echo"<p><span class='red'>会话控制</span>:<br/><span class='red'>cookie:<br/></span>";
+if (isset($_COOKIE['username'])) {
+    echo "<span>欢迎您{$_COOKIE['username']}!</span>"
+    . "<a class='cookieo' href='javascript:;' target='upload'>退出</a>";
+    $cookie_js = "var cookiein = document.getElementsByClassName('cookieo')[0];
+        cookiein.onclick = function () {
+           this.href = 'function/cookie.php?out=out&y=' + window.pageYOffset; 
+        };";//window.pageYOffset===window.scrollY;这2个是别名,但是ie不支持scrollY
+    if (isset($scrollY)) {
+        $cookie_js .= "(function(){window.scrollTo(0,{$scrollY})})();";
+    }
+} else {
+    echo "<span>您当前未登录!"
+    . "<a class='cookiei' href='javascript:;' target='upload'>登录</a></span>";
+    $cookie_js = "var cookieout = document.getElementsByClassName('cookiei')[0];
+        cookieout.onclick = function () {
+         this.href = 'function/cookie.php?k=buff鸽&y=' + window.pageYOffset;  
+        };";
+    if (isset($scrollY)) {
+        $cookie_js .= "(function(){window.scrollTo(0,{$scrollY})})();";
+    }
+}
+
+
 
 
 
@@ -983,6 +1011,8 @@ $end;
 </article>
 </body>
 <script>
+<?php echo $cookie_js;
+?>
     //判断文件上传是否成功
     function successful() {
         document.getElementById('is_success').style.display = 'inline';

@@ -1,3 +1,10 @@
+<?php
+//用来返回上一个页面的滚动条的位置,用完就删除cookie
+if(isset($_COOKIE['y'])){
+    $scrollY=$_COOKIE['y'];
+    setcookie("y", "", 0, '/k_note/php/', '127.0.0.1');
+}
+?>
 <!DOCTYPE html>
 <!--
 <#日期 = "2017-2-2">
