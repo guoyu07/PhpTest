@@ -988,13 +988,38 @@ if (isset($_COOKIE['username'])) {
         $cookie_js .= "(function(){window.scrollTo(0,{$scrollY})})();";
     }
 }
-$_SESSION['username']='buff鸽';
+$_SESSION['username'] = 'buff鸽';
 echo"<br/><span class='red'>session:<br/></span>
 <span><a style='color:blue;' href='process/session.php' title'session测试'>点击进入欢迎页</a>-----</span>    
 <span><a style='color:blue;' href='process/destruct_ses.php' target='upload'>注销会话</a>-----<br/></span>    
 <span>直接进入session.php 进不去,当点击进入欢迎页可以进入<br/>因为此页面已经开启会话,注销后,此页面也不可以进入</span>    
 </p><hr/>";
-//399其他有用的特性
+$eval_str1 = "echo '这是字符串1<br/>';";
+echo"<p><span class='red'>执行字符串 eval()</span>将字符串当做语句 执行.\$eval_str1=\"echo '这是字符串1&lt;br/>'\";
+    <span>eval(\eval_str1)后:<br/></span>";
+eval("{$eval_str1}");
+$arr29 = [['赵', '钱'], ['孙', '李']];
+echo "<span class='red'>序列化</span>: \$arr29=[['赵','钱'],['孙','李']]</br/>
+    echo serialize(\$arr29)== " . serialize($arr29) . "<br/>
+    <span class='red'>恢复序列化</span> unserialize()<br/>
+    ";
+echo "<span class='red'>识别脚本当前运行者</span> get_current_user();-------
+    echo get_current_user()==" . get_current_user() . "<br/>";
+echo "<span class='red'>识别脚本最近修改日期</span> getlastmod();-------
+    echo date('Y-n-d-G:i:s',getlastmod())===" . date('Y-n-d-G:i:s', getlastmod()) . "<br/>";
+ini_set('max_execution_time', 120);
+echo"<span class='red'>设置php.ini</span> ini.set(): -----ini.set('max_execute_time',120)
+    设置脚本 最初运行时间为120s.<br/>得到php.ini的设置 ini.get('max_execute_time')=="
+ . ini_get('max_execution_time') . "<br/>";
+echo "<span class='red'>源代码高亮</span>show_source('文件.php');<br/>
+    show_source('include/show_source.php')= <span class='purple'>输出结果符号变成了全角,空格也是</span><br/>";
+$show_source_res=show_source('include/show_source.php',true);//设置为false 就直接输出,true就是返回输出结果
+echo $show_source_res;
+echo '<hr/>';
+//417 调试 2017-2-15-19:00
+
+
+
 
 
 
