@@ -11,7 +11,7 @@ p{word-wrap:break-word}input[type=text]{border: 1px #ccc solid;border-radius: 2p
 #main{position: relative;width: 1000px;margin: 20px auto 0px auto;border: 1px solid #ccccff;padding: 5px 10px;}
 header{width: 1000px;margin: 15px auto;text-align: center;}.red{color:red;}.margin_30{margin: 0px auto 0px 30px;}
 p{margin: 10px 0px;}#array_count_values{border: 1px solid #000;text-align: center;border-collapse:collapse;
-}#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}.mar_l_30{margin-left: 30px;}.purple{color:#9c27b0;}
+}#array_count_values td{width: 70px;border: 1px dashed #9c9c9c;}.mar_l_30{margin-left: 30px;}.purple{color:#da00ff;}
 .question{display: inline-block;text-align: center;color: #4caf50;width: 100%;}.trorfal{color: blue;}
 #hidden{display: none;}#add_height{width: 980px;height: 1000px;position: absolute;bottom:-1000px;}
 #upload{display: none;}#is_success{color:green;display: none;}.cookiei,.cookieo{color:blue;}
