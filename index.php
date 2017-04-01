@@ -5,8 +5,8 @@ echo "<p><span class = 'red'>多行注释</span>/* statement */</p>\r\n"; /* 多
 echo "<p><span class='red'>单行注释</span>//statement</p>\r\n"; //单行注释
 echo '<p><span class = "red">单行注释</span> #statement</p>' . '<hr/>'; #单行注释
 echo '<p><span class="red">显示时间</span>: ' . date('Y\年n\月j\日H:i:s D')
- . '<br/>date(&apos;代码标示&apos;)Y:年 n:月 j:日 H:小时 i:分钟 s:秒 D:星期几'
- . '字符前加上\.如果是写t要写成\\t.因为\t是特殊字符</p><hr/>';
+ . '<br/>date(&apos;代码标示&apos;)Y:年 n:月 j:日 H:小时 i:分钟 s:秒 D:星期几 '
+ . '字符前加上\.如果是写t要写成\\\t.因为\t是特殊字符</p><hr/>';
 $string = 'hello world!';
 echo '<p>单引号中显示$string ' . "双引号中显示$string</p><hr/>";
 echo '<p>php中标识符区分大小写 $a和$A不是一个变量.但是函数名不区分大小写</p><hr/>';
@@ -370,7 +370,7 @@ foreach ($str3 as $key => $value) {
     echo '$str3[' . $key . '] = ' . $value . '<br/>';
 }
 echo '</p><hr/>';
-require '/include/kkk.inc.php';
+require 'include/kkk.inc.php';
 echo '<p><span class="red">变量名区分大小写,函数名不区分</span></p><hr/>';
 function func1() {
     echo '当前传入了func_num_args():' . func_num_args() . ' 个参数<br/>第一个参数是func_get_args()[0]= ' . func_get_args()[0] . '<br/>'
@@ -1017,9 +1017,13 @@ $show_source_res=show_source('include/show_source.php',true);//设置为false �
 echo $show_source_res;
 echo '<hr/>';
 //417 调试 2017-2-15-19:00
-
-
-
+echo '<span class="red">字符串重复函数 str_repeat("要被重复的字符串",要重复的次数)<br/></span>';
+echo '<span>str_repeat("-=", 10) &nbsp;'.str_repeat("-=", 10).'<br/></span>';
+echo '<span class="red">查看服务器函数</span> <span>php_sapi_name()<br/></span>';
+echo '<span class="mar_l_30">当前使用的服务器是 '.php_sapi_name().'<br/></span>';
+echo '<span class="mar_l_30 purple">apache : apache2handler;<br/></span>';
+echo '<span class="mar_l_30 purple">nginx :未知;<br/></span>';
+echo '<span class="mar_l_30 purple">php内置:cli-server;<br/></span>';
 
 
 
