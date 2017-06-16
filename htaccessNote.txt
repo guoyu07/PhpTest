@@ -1,0 +1,164 @@
+#定制404错误页面
+#ErrorDocument 404 /alisendmsg/test2.php
+
+#只允许 某个ip访问
+#Order Allow, Deny
+#Allow from 192.168.3.1
+
+#只禁止 某个ip访问
+#Order Deny, Allow
+#Deny from 192.168.3.1
+
+#为文件定义类型 为以ttf和ttc为后缀的文件定义类型
+#<IfModule mod_mime.c>
+#    AddType application/x-font-ttf      ttf ttc
+#</IfModule>
+
+#这4个我都没有测试 其中 max_input_time暂时不懂什么意思
+#设置php.ini的一些数值 、、（例如，允许用户在他的本地机器上单次执行一个请求的最大时间）、。
+#最大上传大小
+#php_value upload_max_filesize 20M 
+#最大POST 提交数据大小
+#php_value post_max_size 20M
+#最长执行时间
+#php_value max_execution_time 200
+#限制的最大输入时间
+#php_value max_input_time 200
+
+#让用户不能在线播放mp3  这里好像就是把流的输出格式变了 没有测试
+#AddType application/octet-stream .mp3 .zip 
+
+#设置目录索引 这样子首先test2.php优先级最高
+#DirectoryIndex test2.php index.html index.php
+
+#设置gzip要压缩那些文件
+#<IfModule mod_deflate.c>
+#    AddOutputFilterByType DEFLATE text/plain
+#    AddOutputFilterByType DEFLATE text/html
+#    AddOutputFilterByType DEFLATE text/xml
+#    AddOutputFilterByType DEFLATE application/html
+#    AddOutputFilterByType DEFLATE application/javascript
+#    AddOutputFilterByType DEFLATE application/x-javascript
+#</IfModule>
+
+#禁止访问test2.php
+#<Files "test2.php">
+#    Require all denied
+#</Files>
+
+
+#取消.php的脚本执行权,设置php为文本. 加一个files 就限制在这个文件时不执行
+#<Files "test2.php">
+#RemoveHandler cgi-script .php 
+#AddType text/plain .php
+#</Files>
+
+#为特定的文件设置缓存时间 第一个是60分钟,第二个是缓存到某个时间
+#<FilesMatch "\.(ico|png|jpeg|svg|ttf)$">
+#    Header Set Cache-Control "max-age=3600, public"
+#</FilesMatch>
+#<FilesMatch "\.(js|css)$">
+#    Header Set Cache-Control "public"
+#    Header Set Expires "Wed, 14 Jun 2017 15:02:35 GMT"
+#</FilesMatch>
+
+#通常cgi脚本只能在cgi-bin中运行,如果想在网站中运行一哈子,可以添加cgi格式,然后选项设置执行cgi
+#AddHandler cgi-script .cgi
+#Options +ExecCGI
+
+#禁止列出当前文件夹中的目录
+#<Files *>
+# Options -Indexes
+#</Files>
+
+#设置默认字符集
+#AddDefaultCharset utf-8
+
+##添加vtt格式 上面那种应该是可以的,这个也可以的,这个亲自测试了
+#<Files *.vtt>
+#	ForceType text/vtt;charset=utf-8
+#</Files>
+
+#设置js的字符集是utf-8 这样在浏览器中打开就不是乱码啦
+#<Files *.js>
+#	ForceType application/javascript;charset=utf-8
+#</Files>
+
+#重定向
+#重定向引擎开启
+#RewriteEngine ON
+#检查所有host是127.0.0.1:81 的访问
+#RewriteCond %{HTTP_HOST} ^127\.0\.0\.1:81$
+#重定向到益鸽网,$1是查询的值
+#RewriteRule (.*) http://www.buffge.com/$1 [R=301,L]
+#伪静态
+#RewriteEngine ON
+#RewriteCond %{HTTP_HOST} ^127\.0\.0\.1:81$
+#如果请求的文件不是文件
+#RewriteCond %{REQUEST_FILENAME} !-f
+#如果请求的文件不是目录
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)/test2\.html$ $1/test2.php [R]
+#RewriteRule ^(.*)\index\.html$ $1\index.php [NC]
+#特殊符号：
+#
+#符号              含义
+#^         -     字符串开头
+#$         -     字符串结尾
+#|         -     或 [a|b] ： a 或 b
+#[a-z]     -     a 到 z 的任意字母
+#+         -     之前字母的一次或多次出现
+#*         -     之前字母的零次或多次出现
+#?         -     之前字母的零次或一次出现
+#常量和它们的含义：
+#
+#常量          含义
+#NC          -   区分大小写
+#L           -   最后的规则 – 停止处理后面规则
+#R           -   临时重定向到新 URL
+#R=301       -   永久重定向到新 URL
+#F           -   禁止发送 403 头给用户
+#P           -   代理 - 获取远程内容代替部分并返回
+#G           -   Gone， 不再存在
+#S=x         -   跳过后面的 x 条规则
+#T=mime-type -   强制指定 MIME 类型
+#E=var:value -   设置环境变量 var 的值为 value
+#H=handler   -   设置处理器
+#PT          -   Pass through - 用于 URL 还有额外的头
+#QSA         -   将查询字符串追加到替换 URL 
+
+#防盗链
+#RewriteEngine ON
+#RewriteCond %{HTTP_REFERER} !^$
+#RewriteCond %{HTTP_REFERERER} !^http://(www\.)?mydomain.com/.*$ [NC]
+#RewriteRule \.(gif|jpeg|png)$ - [F].
+
+#维护时禁止所有不是从/alisendmsg/doc/这个目录下进去的人,并重定向到error.php
+#同时如果是访问的css js之类的也会重定向到error.php
+#RewriteEngine ON
+#RewriteCond %{REQUEST_URI} !^/alisendmsg/doc/ [NC]
+#RewriteCond %{REQUEST_URI} ^((.*).css|(.*).js|(.*).png|(.*).jpg) [NC]
+#RewriteRule ^(.*)$ /alisendmsg/error.php [NC,L,QSA]
+
+#禁止访问ini 和txt后缀的文件
+#<FilesMatch ".(ini|txt)$">
+#Order allow,deny 
+#Deny from All
+#</FilesMatch>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

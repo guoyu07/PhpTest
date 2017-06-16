@@ -1,12 +1,12 @@
 <?php
 if (isset($_GET['out'])) {
-    setcookie("username", '',0,'/k_note/php/', '127.0.0.1');
-    setcookie("password", '',0,'/k_note/php/', '127.0.0.1');
+    setcookie("username", '',0,'/k_note/note/php/', '127.0.0.1');
+    setcookie("password", '',0,'/k_note/note/php/', '127.0.0.1');
     setcookie("y", $_GET['y'], time() + 30, '/k_note/php/', '127.0.0.1');
 } else {
     if (isset($_GET['k'])) {
-        setcookie("username", $_GET['k'], time() + 30, '/k_note/php/', '127.0.0.1');
-        setcookie("y", $_GET['y'], time() + 30, '/k_note/php/', '127.0.0.1');
+        setcookie("username", $_GET['k'], time() + 30, '/k_note/note/php/', '127.0.0.1');
+        setcookie("y", $_GET['y'], time() + 30, '/k_note/note/php/', '127.0.0.1');
     }
 }
 ?>

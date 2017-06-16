@@ -15,7 +15,7 @@ session_start();
 -->
 <html>
     <head>
-        <meta charset=UTF-8">
+        <meta charset="UTF-8">
         <title>php笔记</title>
         <link rel="stylesheet" type="text/css" href="public/css/style_1.css" >
     </head>
@@ -24,4 +24,4 @@ session_start();
             <h1>PHP 学习笔记</h1>
         </header>
         <article id='main'>
-            <div id="add_height"></div>
+            <!--<div id="add_height"></div>-->

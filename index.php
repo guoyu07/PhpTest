@@ -19,23 +19,35 @@ echo '<p><span class="red">定义常量</span>define(&apos;name&apos;,value[,fal
  . '在命名空间中const只在命名空间有效,define 全局有效';
 define('PI', 3.1415926, FALSE);
 $q = 0;
-class pi {
-    const YUAN = 3.1415926;
-    public $q = 1;
+class pi
+{
+    const
+            YUAN = 3.1415926;
+    public
+            $q = 1;
     function setQ($value) {
         $this->q = $value;
+
     }
+
 }
+
 $temp1 = new pi();
 $temp1->setQ(1);
 echo'全局常量PI:' . PI . '---pi类中的常量pi::YUAN:' . pi::YUAN . '<br/>';
 echo '$q为全局变量,pi->q为类中变量,先创建一个temp1实体,然后引用$temp1->q.$q=' . $q . ' ++++++++++ temp1->q=' . $temp1->q . '</p><hr/>';
-class static_var {
-    public static $val = 1;
-    public static function set($value) { //静态函数 不需要创建对象就可以用className::functionName() 调用.静态函数中不可以使用$this,只能用self::.
+class static_var
+{
+    public static
+            $val = 1;
+    public static
+            function set($value) { //静态函数 不需要创建对象就可以用className::functionName() 调用.静态函数中不可以使用$this,只能用self::.
         self::$val += $value;
+
     }
+
 }
+
 static_var::set(2);
 echo '<p><span class="red">静态变量</span> 初始值为1,set(2)之后为$sta_var->val:' . static_var::$val;
 static_var::set(2);
@@ -43,7 +55,7 @@ echo ' 现在又$sta_var->set(2) 现在$sta_var->val= ' . static_var::$val . '</
 $quot = 'hello';
 $quot1 = $quot;
 $quot2 = &$quot;
-echo '<p><span class="red">地址引用符<b>&</b></span>&nbsp;$quot=&apos;hello,&apos;$quot1=$quot;$quot2=&$quot,'
+echo '<p><span class="red">地址引用符<b>&</b></span>&nbsp;$quot=&apos;hello,&apos;$quot1=$quot;$quot2=&amp;$quot,'
  . '现在$quot1= ' . $quot1 . ',$quot2= ' . $quot2;
 $quot .= 'world';
 echo '<br/>$quot.=&apos;&nbsp;world&apos;之后$quot1= ' . $quot1 . '&nbsp;$quot2= ' . $quot2 . '&nbsp;赋值时开辟新的内存,引用时传递地址<hr/>';
@@ -64,7 +76,8 @@ for ($i = 0; $i < 11; $i++) {
     if ($fun[$i]($num1)) {
         $temp = 'num1_' . $fun[$i];
         $$temp = '<span class="trorfal">是</span>';
-    } else {
+    }
+    else {
         $temp = 'num1_' . $fun[$i];
         $$temp = '<span class="trorfal">否</span>';
     }
@@ -121,7 +134,8 @@ if (rand(0, 1)) {                                                  //随机采�
             echo'<br/>';
         }
     }
-} else {
+}
+else {
     foreach ($arr as $key => $value) {                              //foreach遍历数组
         echo '$arr[' . $key . ']= ' . $value . '&nbsp;&nbsp;';
         if ($key === 9) {
@@ -138,7 +152,7 @@ echo '<p><span class="red">数组指针操作</span> $arr2=[1,2,3,4]<br/>current
 next($arr2);
 echo'next($arr2)后将数组中的内部指针向前移动一位 current($arr2)= ' . current($arr2) . '<br/>';
 prev($arr2);
-echo'prev($arr2)后将数组的内部指针倒回一位 current($arr2)= ' . current($arr2) . '</br>';
+echo'prev($arr2)后将数组的内部指针倒回一位 current($arr2)= ' . current($arr2) . '<br/>';
 end($arr2);
 echo 'end($arr2)后将数组的内部指针指向最后一个单元 current($arr2)= ' . current($arr2) . '<br/>';
 reset($arr2);
@@ -179,7 +193,9 @@ function compare($x, $y) {//按arr6[*][2]进行升序排序
         return 0;
     }
     return $x[2] > $y[2] ? 1 : -1;
+
 }
+
 usort($arr6, 'compare');
 echo 'usort(数组,比较函数) <span class="red">用户自定义排序函数</span> 当前$arr6=' . "[['奔驰','2t',50],['宝马','3t',45],['东风','20t',59]]<br/>"
  . '按$arr6[*][2]排序后 $arr6=<br/>';
@@ -235,7 +251,9 @@ echo '<p><span class="red">批量处理数组元素</span>array_walk(数组,自�
 function arr_oper(&$value, $key, $data) {//这里用引用地址才能修改原数组值
     $value .= $data;
     $key .= null; //netbeans报警告看着不爽
+
 }
+
 $arr11 = ['q', 'w', 'e', 'r'];
 array_walk($arr11, 'arr_oper', '_new');
 foreach ($arr11 as $key => $value) {
@@ -354,7 +372,8 @@ echo '匹配邮箱是否符合格式: 当前$mail_4=' . "['qwe.234.sd','234saf@w
 foreach ($mail_4 as $key => $value) {
     if (preg_match('/[a-z0-9]{2,}@[a-z0-9]{2,}\.[com|cn|net]/i', $value)) {
         echo $value . ' 是一个正确的邮箱格式<br/>';
-    } else {
+    }
+    else {
         echo $value . ' 不是一个正确的邮箱格式<br/>';
     }
 }
@@ -375,7 +394,9 @@ echo '<p><span class="red">变量名区分大小写,函数名不区分</span></p
 function func1() {
     echo '当前传入了func_num_args():' . func_num_args() . ' 个参数<br/>第一个参数是func_get_args()[0]= ' . func_get_args()[0] . '<br/>'
     . '第三个参数为 func_get_arg(2): ' . func_get_arg(2) . '<br/>';
+
 }
+
 echo '<p><span class="red">获取函数传入参数</span> func_num_args():返回传入参数个数--func_get_arg(下标)<br/>'
  . '执行func1(520,13,14)后:<br/>';
 func1(520, 13, 14);
@@ -386,30 +407,38 @@ function func2() {
     global $glo;
     $glo = '222';
     return $temp1;
+
 }
+
 $use_glo = func2();
 echo'<p><span class="red">函数内部使用和定义全局变量</span> $GLOBAL[\'name\']使用全局变量,global $name;定义全局变量<br/>'
  . '当前$glo=\'111\',执行func2()后: $glo= ' . $glo . ' 函数内部使用全部变量$GLOBALS[\'glo\']= ' . $use_glo . '</p><hr/>';
 function reverse_str(&$param) {
     $param2 = substr($param, 0, 1);
     if (strlen($param) > 0) {
-        reverse_str(substr($param, 1));
+        $temp = substr($param, 1);
+        reverse_str($temp);
         $param3 = substr($param, 1);
         $param3 .= $param2;
     }
     if (isset($param3)) {
         $param = $param3;
     }
+
 }
+
 $str4 = 'buffge';
 reverse_str($str4);
-echo '<p><span class="red">递归函数</span>: 颠倒一个字符串  当前$str4=\'buffge\'</br>reverse_str($str4)后:<br/>'
+echo '<p><span class="red">递归函数</span>: 颠倒一个字符串  当前$str4=\'buffge\'<br/>reverse_str($str4)后:<br/>'
  . '$str4= ' . $str4 . '<br/><hr/>';
 const STR5 = '少壮不努力,老大徒伤悲';
 use buff as b;
+
 function weight($value) {
     return "大陆的{$value}斤是 " . (500 * $value) . '克.';
+
 }
+
 echo '<p><span class="red">命名空间</span> 当前脚本中const STR5=\'少壮不努力,老大徒伤悲\';输出STR5= ' . STR5
  . '<br/>echo buff\STR5= ' . buff\STR5 . '<br/> use 空间名 as 别名:<br/>use buff as b 后: echo buff\STR5===echo b\STR5<br/><br/>'
  . '当前脚本中运行函数 weight(5)输出为: ' . weight(5) . '<br/>echo b\weight(5)= ' . b\weight(5) . '<br/></p><hr/>';
@@ -418,33 +447,49 @@ echo '<p><span class="red">命名空间</span> 当前脚本中const STR5=\'少�
  * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 $destruct_control = 0;
 //小狗对象的基类
-class dog {
-    protected $color;
-    protected $weight;
+class dog
+{
+    protected
+            $color;
+    protected
+            $weight;
     function __construct($color = 'white', $weight = 5) {
         echo '你创建了一只小狗<br/>';
         $this->color = $color;
         $this->weight = $weight;
+
     }
+
     function __destruct() {
         if ($GLOBALS['destruct_control'] === 1) {
             return;
         }//如果不控制一下,脚本结束会自动执行 所有html最下面2行会执行2次
         echo '你销毁了一只狗<br/>';
+
     }
+
     function __set($name, $value) {
         $this->$name = $value;
+
     }
+
     function __get($name) {
         return isset($this->$name) ? $this->$name : null;
+
     }
+
     function speak() {
         return '汪汪汪!';
+
     }
+
     function eat($food) {
         return $food === 'dog_bone' ? 'CAO 我才不吃这个呢' : '谢谢主人';
+
     }
+
 }
+
 echo '<p><span class="red">类与对象</span>:<br/>'
  . '<span class="red mar_l_30">构造函数</span>: $dog1=new dog()后 自动执行dog类中的构造函数:<br/>$dog1=new dog()后 ';
 $dog1 = new dog();
@@ -460,22 +505,33 @@ echo '当前小狗对象具有的属性: 颜色,体重; 具有的方法/功能: 
  . '给小狗吃猪骨头:$dog->eat(\'pig_bone\')--' . $dog2->eat('pig_bone') . '<br/>'
  . '给小狗吃狗骨头:$dog->eat(\'dog_bone\')--' . $dog2->eat('dog_bone') . '<br/><br/>';
 //哈士奇类
-class haShiQi extends dog {
-    protected $type = 'hashiqi';
-    protected $name = '11';
+class haShiQi extends dog
+{
+    protected
+            $type = 'hashiqi';
+    protected
+            $name = '11';
     function speak() {
         return '老子不想叫,给你一个眼神自己体会';
+
     }
+
     function parSpeak() {
         return parent::speak();
+
     }
+
     function eat($food = '') {
         return !empty(trim($food)) ? '放这块我等会吃' : '你要让我吃空气呀?';
+
     }
+
     function __clone() {
         
     }
+
 }
+
 echo '<span class="red mar_l_30">类继承</span>: class haShiQi extends dog{...}--哈士奇对象继承了dog的属性'
  . "\$dog3=new haShiQi('黑白', '20')后:<br/>";
 $dog3 = new haShiQi('黑白', '20');
@@ -490,100 +546,173 @@ echo '设置小狗的名字$dog3->name = \'智障1号\')后: 小狗的名字是:
  . '<span class="red mar_l_30">final 禁止继承与重载</span> :<br/>final class A{...}: 类A无法被其他类继承<br/>'
  . '类中的final function b(){..} : 类中的函数b 无法被子函数覆盖<br/><br/>';
 //猫基类
-class cat {
-    static function speak() {
+class cat
+{
+    static
+            function speak() {
         return '喵喵喵~';
+
     }
-    const DEFAULT_NAME = '小白';
+
+    const
+            DEFAULT_NAME = '小白';
 }
+
 echo'<span class="red mar_l_30">静态方法</span> :意思就是没有实例化这个对象就可以直接用类中的这个方法;<br/>'
  . '现在没有实例化class cat;直接echo cat::speak();= ' . cat::speak() . '<br/>'
  . '类中的const常量也可以未经实例化就直接调用 比如echo cat::DEFAULT_NAME;= ' . cat::DEFAULT_NAME . '<br/><br/>';
 echo '<span class="red mar_l_30">接口</span> : interface 接口名{ 定义常量以及需要实现的方法}----<span class="purple">接口可以继承多个接口</span><br/>'
  . '实现接口 class A implements 接口1,2,3{..}<br/>定义一个car 类, 3个接口 高 中 低档类型.奥迪需要继承全部接口,奥拓只需继承 低档的接口<br/>';
 //低档车接口
-interface low_grade_car {//低档车只要能开就行
-    const SPEED = 100;
-    public function drive();
+interface low_grade_car
+{//低档车只要能开就行
+    const
+            SPEED = 100;
+    public
+            function drive();
 }
+
 //中档车接口
-interface medium_grade_car {//中档车还要能睡觉
-    const SPEED = 200;
-    public function drive();
-    public function sleep();
+interface medium_grade_car
+{//中档车还要能睡觉
+    const
+            SPEED = 200;
+    public
+            function drive();
+    public
+            function sleep();
 }
+
 //高档车接口
-interface high_grade_car {//高档的要能撞别人
-    const SPEED = 300;
-    public function drive();
-    public function sleep();
-    public function attack($target);
+interface high_grade_car
+{//高档的要能撞别人
+    const
+            SPEED = 300;
+    public
+            function drive();
+    public
+            function sleep();
+    public
+            function attack($target);
 }
+
 //车基类
-class car {
-    protected $speed;
-    protected $weight;
+class car
+{
+    protected
+            $speed;
+    protected
+            $weight;
     function __construct() {
         $this->speed = $this::SPEED;
         $this->weight = $this::$weight_s;
+
     }
+
     function __set($name, $value) {
         $this->$name = $value;
+
     }
+
     function __get($name) {
         return isset($this->$name) ? $this->$name : null;
+
     }
-    static function classtype() {
+
+    static
+            function classtype() {
         return __CLASS__;
+
     }
-    public static function check() {
+
+    public static
+            function check() {
         $type = static::classtype(); //延迟绑定静态类名
         $check_car_function = ['sleep', 'attack'];
         foreach ($check_car_function as $value) {
             echo method_exists($type, $value) ? '能' . $value . '&nbsp;' : '不能' . $value . '&nbsp;';
         }
         echo ' 最高速度是 ' . $type::SPEED . ' 重量为' . $type::$weight_s . '吨<br/>';
+
     }
+
 }
+
 //奥拓类
-class aotuo extends car implements low_grade_car {
-    static $weight_s = 2;
-    public function drive() {
+class aotuo extends car implements low_grade_car
+{
+    static
+            $weight_s = 2;
+    public
+            function drive() {
         return '我正在已' . $this->speed . '速度开车';
+
     }
-    static function classtype() {
+
+    static
+            function classtype() {
         return __CLASS__;
+
     }
+
 }
+
 //本田类
-class bentian extends car implements medium_grade_car {
-    static $weight_s = 3;
-    public function drive() {
+class bentian extends car implements medium_grade_car
+{
+    static
+            $weight_s = 3;
+    public
+            function drive() {
         return '我正在已' . $this->speed . '速度开车';
+
     }
-    public function sleep() {
+
+    public
+            function sleep() {
         return '窗户已经关好了,可以睡觉了';
+
     }
-    static function classtype() {
+
+    static
+            function classtype() {
         return __CLASS__;
+
     }
+
 }
+
 //奥迪类
-class aodi extends car implements high_grade_car {
-    static $weight_s = 5;
-    public function drive() {
+class aodi extends car implements high_grade_car
+{
+    static
+            $weight_s = 5;
+    public
+            function drive() {
         return '我正在已' . $this->speed . '速度开车';
+
     }
-    public function sleep() {
+
+    public
+            function sleep() {
         return '窗户已经关好了,可以睡觉了';
+
     }
-    public function attack($target) {
+
+    public
+            function attack($target) {
         return '正在撞 ' . $target;
+
     }
-    static function classtype() {
+
+    static
+            function classtype() {
         return __CLASS__;
+
     }
+
 }
+
 echo '现在未实例化aodi类,执行aodi::check();检查车配置 : method_exists(\'aodi\',\'sleep&attack\')<br/>'
  . '<span class="red">检验类中方法是否存在</span> method_exists():<br/>';
 echo 'aodi车:&nbsp;';
@@ -615,40 +744,68 @@ echo '<span class="red">函数参数类型限制</span>: function a(HaShiQi $arg
 is_Hsq($dog3);
 function is_Hsq(HaShiQi $arg) {
     echo '你输入了的$dog3是哈士奇类的实例! $arg->type = ' . $arg->type . ' 如果输入的不是哈士奇实例,脚本会终止<br/><br/>';
+
 }
-class A1 {
-    static $className;
-    static function getname() {
+
+class A1
+{
+    static
+            $className;
+    static
+            function getname() {
         static::$className = __CLASS__;
         return static::$className;
+
     }
-    static function bind() {
+
+    static
+            function bind() {
         return static::getname(); //使用static 就是延迟静态绑定,等到执行bind再绑定getname
+
     }
+
 }
-class B1 extends A1 {
-    static function getname() {
+
+class B1 extends A1
+{
+    static
+            function getname() {
         static::$className = __CLASS__;
         return static::$className;
+
     }
+
 }
+
 echo '<span class="red mar_l_30">延迟静态绑定</span>继承父类的,延迟绑定父类中的静态属性<br/>'
  . '没有延迟绑定时候B1类获取$className= A1<br/>延迟绑定后: ';
 echo '$className= ' . B1::bind() . '<br/><br/>';
-class hand {
-    public $finger_num;
-    public function __construct($value) {
+class hand
+{
+    public
+            $finger_num;
+    public
+            function __construct($value) {
         $this->finger_num = $value;
+
     }
+
 }
-class person {
-    public $name;
-    public $finger;
+
+class person
+{
+    public
+            $name;
+    public
+            $finger;
     function __construct($arg, hand $hand) {
         $this->name = $arg;
         $this->finger = $hand;
+
     }
+
 }
+
 $per1 = new person('buffge', new hand(5));
 $per2 = clone $per1;
 
@@ -657,14 +814,21 @@ echo '<span class="red mar_l_30">克隆对象</span>  $per2 = clone $per1;<br/>�
  . '<br/>此时$per1&$per2的$finger都是同一个对象,如果修改了任意一个的手指数量就等于间接修改了 hand实例的值.现在$per2->finger->finger_num= 6;后:<br/>';
 $per2->finger->finger_num = 6;
 echo '$per1->finger->finger_num = ' . $per1->finger->finger_num;
-class hand2 extends hand {
+class hand2 extends hand
+{
     
 }
-class person2 extends person {
-    public function __clone() {
+
+class person2 extends person
+{
+    public
+            function __clone() {
         $this->finger = clone $this->finger;
+
     }
+
 }
+
 $per2_1 = new person2('buffge', new hand2(5));
 $per2_2 = clone $per2_1;
 echo '现在新创建hand2 和person2类,在person2类中设置__clone()函数,当person2被克隆时自动调用;<br/> '
@@ -678,44 +842,61 @@ echo'<span class="red mar_l_30">抽象类</span> : abstract class ClassName{...}
  . '就是定义一个不能被实例化的类,类中的抽象方法必须要重写.比如定义一个抽象car类.这个car类不能被实例化;<br/>'
  . '但是他里面有一些其他比如奥迪,奔驰,大众等等车类需要重复调用的方法,以及一些必须要实现的方法(抽象方法)'
  . '<br/>比如 drive(), 就是让后面继承的车必须要有开车这个方法.<br/><br/>';
-class overload {
-    public function __call($name, $arg) {
+class overload
+{
+    public
+            function __call($name, $arg) {
         if ($name == 'what') {
             if (is_array($arg)) {
                 return '这是一个数组';
-            } elseif (is_string($arg)) {
+            }
+            elseif (is_string($arg)) {
                 return '这是一个字符串';
             }
         }
+
     }
+
 }
+
 $overload1 = new overload;
 echo '<span class="red mar_l_30">类方法重载</span> __call();'
  . '<br/>$overload1=new overload; $overload1->what([1]) = ' . $overload1->what([1])
  . '<span class="purple">&nbsp;&nbsp;需要被重载的函数在类中不能被定义</span><br/><br/>';
-class autoload {
-    public function loader() {
+class autoload
+{
+    public
+            function loader() {
         
     }
-    public function __construct() {//设置引入地址,可多个
+
+    public
+            function __construct() {//设置引入地址,可多个
+        //这里$this 表示这个函数是这个类里面的,如果是全局的就不用了
         spl_autoload_register([$this, 'my_autoload1']);
         spl_autoload_register([$this, 'my_autoload2']);
+
     }
+
     function my_autoload1($val) {
         $adress = "include/class/{$val}.class.php";
         if (is_file($adress)) {
             require $adress;
         }
+
     }
+
     function my_autoload2($val) {
         $adress = "include/{$val}.php";
         if (is_file($adress)) {
             require $adress;
         }
+
     }
+
 }
+
 $autoload1 = new autoload();
-$autoload1->loader(new pig(), new bird()); //需要用几个类就引入几个
 $pig1 = new pig();
 $bird1 = new bird();
 echo '<span class="red mar_l_30">自动加载类</span>spl_autoload_register(函数):可以注册多个自动载入;<br/>'
@@ -733,13 +914,20 @@ echo '<script>var info =document.getElementById( \'hidden\').innerText,refl="' .
  . '++++++++++++++++++++这是反射api基础的的信息++++++++++++++++++++\n"+refl+'
  . '"--------------------反射api基础的的信息结束--------------------\n");</script>';
 define('NOW_TIME', date('Y\年n\月j\日H:i:s D', time()));
-class A2 {
-    public $name = 'A1';
-    public $time = NOW_TIME;
-    public function __toString() {
+class A2
+{
+    public
+            $name = 'A1';
+    public
+            $time = NOW_TIME;
+    public
+            function __toString() {
         return var_export($this, true);
+
     }
+
 }
+
 $a2_1 = new A2();
 echo '<span class="red mar_l_30">__string():将类转换成字符串</span> echo 对象时候自动调用;<br/>'
  . '<span class="red">输出或返回一个变量的字符串表示</span>: var_export($obj,true/false):false:返回php代码'
@@ -751,7 +939,8 @@ try {
     if (!isset($undefine_1)) {
         throw new Exception('$undefine_1变量未定义', 1);
     }
-} catch (Exception $e) {
+}
+catch (Exception $e) {
     echo 'Exception : <br/>错误信息:' . $e->geTMessage() . '<br/>
           错误行号 : ' . $e->getLine() . '<br/>
           异常脚本文件地址 : ' . $e->getFile() . '<br/>
@@ -760,16 +949,21 @@ try {
 echo '<span class="red mar_l_30">自定义异常类</span> 只可以覆盖__string以及新函数;
 <br/>判断数组以及字符串异常 : <br/>';
 $arr28 = ['min'];
-class exception_str extends Exception {
+class exception_str extends Exception
+{
     function __tostring() {
         return $this->message . '不是一个字符串<br/><hr/>';
+
     }
+
 }
+
 try {
     if (!is_string($arr28)) {
         throw new exception_str('$arr28');
     }
-} catch (exception_str $e) {
+}
+catch (exception_str $e) {
     echo $e;
 }
 /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*
@@ -884,7 +1078,7 @@ echo '<span>mysql 查询语句不区分大小写,数据库和表的名称区分 
 <h2>php 高级程序技术</h2>
 <iframe id="upload" name="upload">
     <?php
-    require_once "{$_SERVER['DOCUMENT_ROOT']}/k_note/php/process/upFilePro.php";
+    require_once "{$_SERVER['DOCUMENT_ROOT']}/k_note/note/php/process/upFilePro.php";
     ?>
 </iframe>
 
@@ -977,7 +1171,8 @@ if (isset($_COOKIE['username'])) {
     if (isset($scrollY)) {
         $cookie_js .= "(function(){window.scrollTo(0,{$scrollY})})();";
     }
-} else {
+}
+else {
     echo "<span>您当前未登录!"
     . "<a class='cookiei' href='javascript:;' target='upload'>登录</a></span>";
     $cookie_js = "var cookieout = document.getElementsByClassName('cookiei')[0];
@@ -990,13 +1185,13 @@ if (isset($_COOKIE['username'])) {
 }
 $_SESSION['username'] = 'buff鸽';
 echo"<br/><span class='red'>session:<br/></span>
-<span><a style='color:blue;' href='process/session.php' title'session测试'>点击进入欢迎页</a>-----</span>    
+<span><a style='color:blue;' href='process/session.php' title='session测试'>点击进入欢迎页</a>-----</span>    
 <span><a style='color:blue;' href='process/destruct_ses.php' target='upload'>注销会话</a>-----<br/></span>    
 <span>直接进入session.php 进不去,当点击进入欢迎页可以进入<br/>因为此页面已经开启会话,注销后,此页面也不可以进入</span>    
 </p><hr/>";
 $eval_str1 = "echo '这是字符串1<br/>';";
-echo"<p><span class='red'>执行字符串 eval()</span>将字符串当做语句 执行.\$eval_str1=\"echo '这是字符串1&lt;br/>'\";
-    <span>eval(\eval_str1)后:<br/></span>";
+echo"<p><span class='red'>执行字符串 eval()</span>将字符串当做语句 执行.\$eval_str1=\"echo '这是字符串1&lt;br/>;'\";
+    <span>eval(\"\$eval_str1\")后:<br/></span>";
 eval("{$eval_str1}");
 $arr29 = [['赵', '钱'], ['孙', '李']];
 echo "<span class='red'>序列化</span>: \$arr29=[['赵','钱'],['孙','李']]</br/>
@@ -1013,37 +1208,145 @@ echo"<span class='red'>设置php.ini</span> ini.set(): -----ini.set('max_execute
  . ini_get('max_execution_time') . "<br/>";
 echo "<span class='red'>源代码高亮</span>show_source('文件.php');<br/>
     show_source('include/show_source.php')= <span class='purple'>输出结果符号变成了全角,空格也是</span><br/>";
-$show_source_res=show_source('include/show_source.php',true);//设置为false 就直接输出,true就是返回输出结果
+$show_source_res = show_source('include/show_source.php', true); //设置为false 就直接输出,true就是返回输出结果
 echo $show_source_res;
 echo '<hr/>';
 //417 调试 2017-2-15-19:00
-echo '<span class="red">字符串重复函数 str_repeat("要被重复的字符串",要重复的次数)<br/></span>';
-echo '<span>str_repeat("-=", 10) &nbsp;'.str_repeat("-=", 10).'<br/></span>';
-echo '<span class="red">查看服务器函数</span> <span>php_sapi_name()<br/></span>';
-echo '<span class="mar_l_30">当前使用的服务器是 '.php_sapi_name().'<br/></span>';
-echo '<span class="mar_l_30 purple">apache : apache2handler;<br/></span>';
-echo '<span class="mar_l_30 purple">nginx :未知;<br/></span>';
-echo '<span class="mar_l_30 purple">php内置:cli-server;<br/></span>';
+?>
+<p>
+    <span class="red">字符串重复函数 str_repeat("要被重复的字符串",要重复的次数)<br/></span>
+    <span>str_repeat("-=", 10) &nbsp;<?php echo str_repeat("-=", 10); ?><br/></span>
+    <span class="red">查看服务器函数</span> <span>php_sapi_name()<br/></span>
+    <span class="mar_l_30">当前使用的服务器是<?php echo php_sapi_name(); ?><br/></span>
+    <span class="mar_l_30 purple">apache : apache2handler;<br/></span>
+    <span class="mar_l_30 purple">nginx :我没用过,不知道;<br/></span>
+    <span class="mar_l_30 purple">php内置:cli-server;<br/></span>
+    <span class="red">输出缓冲区</span>
+    <span>ob_flush()和flush()<br/></span>
+    <span>让程序未执行完先输出前面的内容.这里两个要一起用<br/></span>
+    <span class='purple'>类似ajax效果.可以一次输出10个.然后用js 删除前面的.<br/></span>
+    <span class='purple'>获取当前脚本所占内存 </span>
+    <span>memory_get_usage()<br/></span>
+    <span class='red'>phpDOC注释编写格式 :<br/></span>
+    <span class='mar_l_30'>/**<br/></span>
+    <span class='mar_l_30'>* @name 名字<br/></span>
+    <span class='mar_l_30'>* @abstract 申明变量/类/方法<br/></span>
+    <span class='mar_l_30'>* @access 指明这个变量、类、函数/方法的存取权限<br/></span>
+    <span class='mar_l_30'>* @author 函数作者的名字和邮箱地址<br/></span>
+    <span class='mar_l_30'>* @category  组织packages<br/></span>
+    <span class='mar_l_30'>* @copyright 指明版权信息<br/></span>
+    <span class='mar_l_30'>* @const 指明常量<br/></span>
+    <span class='mar_l_30'>* @deprecate 指明不推荐或者是废弃的信息MyEclipse编码设置<br/></span>
+    <span class='mar_l_30'>* @example 示例<br/></span>
+    <span class='mar_l_30'>* @exclude 指明当前的注释将不进行分析，不出现在文挡中<br/></span>
+    <span class='mar_l_30'>* @final 指明这是一个最终的类、方法、属性，禁止派生、修改。<br/></span>
+    <span class='mar_l_30'>* @global 指明在此函数中引用的全局变量<br/></span>
+    <span class='mar_l_30'>* @include 指明包含的文件的信息<br/></span>
+    <span class='mar_l_30'>* @link 定义在线连接<br/></span>
+    <span class='mar_l_30'>* @module 定义归属的模块信息<br/></span>
+    <span class='mar_l_30'>* @modulegroup 定义归属的模块组<br/></span>
+    <span class='mar_l_30'>* @package 定义归属的包的信息<br/></span>
+    <span class='mar_l_30'>* @param 定义函数或者方法的参数信息<br/></span>
+    <span class='mar_l_30'>* @return 定义函数或者方法的返回信息<br/></span>
+    <span class='mar_l_30'>* @see 定义需要参考的函数、变量，并加入相应的超级连接。<br/></span>
+    <span class='mar_l_30'>* @since 指明该api函数或者方法是从哪个版本开始引入的<br/></span>
+    <span class='mar_l_30'>* @static 指明变量、类、函数是静态的。<br/></span>
+    <span class='mar_l_30'>* @throws 指明此函数可能抛出的错误异常,极其发生的情况<br/></span>
+    <span class='mar_l_30'>* @todo 指明应该改进或没有实现的地方<br/></span>
+    <span class='mar_l_30'>* @var 定义说明变量/属性。<br/></span>
+    <span class='mar_l_30'>* @version 定义版本信息<br/></span>
+    <span class='mar_l_30'>*/<br/></span>
+    <span class='red'>php 接口参数版<br/></span>
+    <span>fwrite(STDOUT, "Enter your name: ");<br/></span>
+    <span>$name = trim(fgets(STDIN));<br/></span>
+    <span>fwrite(STDOUT, "Hello, $name!");<br/></span>
+    <span class='red'>字符串压缩 解压缩<br/></span>
+    <span>$compressed = gzcompress('Compresjdfhjskdhfjksdhfjkhsdfjkhsdfjkhjsdfhjksdhfjkss me');<br/></span>
+    <span>echo gzuncompress($compressed);<br/></span>
+    <span class='purple'>默认压缩级别是6 ,据网友测试,压缩率有百分之80<br/></span>
+    <span class='red'>获取对应域名的ip地址 gethostbyname()<br/></span>
+    <span>www.baidu.com的ip地址是gethostbyname('www.baidu.com')  : <?php gethostbyname('www.baidu.com'); ?><br/></span>
+    <span class='red'>将ipv4地址字符串转换为int型 ip2long($ip)<br/></span>
+    <span>ip2long('180.97.33.108') = <?php echo ip2long('180.97.33.108'); ?><br/></span>
+    <span class='red'>将int型ipv4地址转换为字符串 longip2($ip)<br/></span>
+    <span>longip2(3026264428) = <?php echo long2ip(3026264428); ?><br/></span>
+</p><hr/>
+<p>
+    <span class='red'>显示或屏蔽错误 error_report();<br/></span>
+    <span class='mar_l_30 blue'>显示所有错误</span>
+    <span> error_report(E_ALL);或者error_report(-1);<br/></span>
+    <span class='mar_l_30 blue'>显示所有错误除了notice</span>
+    <span> error_report(E_ALL&amp;~E_NOTICE);<br/></span>
+    <span class='mar_l_30 blue'>全部错误都不显示</span>
+    <span> error_report(0);<br/></span>
+    <span class='mar_l_30 purple'>error_report(0)对parse错误无效</span>
+    <span class='purple'>因为解析错误的话,脚本根本不能运行(我猜的)</span>
+</p><hr/>
+<p>
+    <span class='red'>自定义错误 </span> 
+    <span>trigger_error();<br/></span><?php
+    ini_set("display_errors", 0);
+    if (3 > 2) {
+        //只能用E_USER_系列的错误级别
+        trigger_error('3真的大于2呢!', E_USER_NOTICE);
+    }
+    ini_set("display_errors", 1);
+    ?>
+    <span>trigger_error('3真的大于2呢!', E_USER_NOTICE);<br/></span>
+    <span>这条错误信息被放在了 php.ini中error.log</span>
+    <span>或者apache的error.log<br/></span>
+    <span>如果设置了php.ini的error.log,那么apache的错误日志不记录php错误<br/></span>
+    <span>apache的开启关闭记录一直在记录在apache的error.log中<br/></span>
+</p><hr/>
+<p>
+    <span class='red'>输出信息到错误日志 </span> 
+    <span>error_log(要发送的信息,flag);<br/></span>
+    <span>flag默认是0就是保存,如果是1,后面还要加一个邮箱地址发送邮件<br/></span>
+    <span class='purple'>保存地址为php或者apache的错误日志</span>
+</p><hr/>
+<p>
+    <span class='red'>设置自定义错误处理函数 </span> 
+    <span>set_error_handle('自定义函数名');<br/></span>
+    <span class='purple'>自定义函数中默认有4个参数,错误号,错误信息</span>
+    <span class='purple'>,文件名,行号<br/></span>
+    <?php
+    function custom_error($errno, $error_mes, $filename, $line) {
+        echo "发生了错误 [{$errno}]:{$error_mes} 在{$filename}"
+        . "的第{$line}行";
 
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    set_error_handler('custom_error');
+//   trigger_error('随便报个错误玩玩波!', E_USER_NOTICE);
+    ?>
+</p>
+<p>
+    <span class='red'>取消自定义错误处理函数 </span> 
+    <span>restore_error_handler();</span>
+    <?php restore_error_handler(); ?>
+</p><hr/>
+<?php
+#我想让脚本只在致命错误时候调用,但是现在警告也会触发,
+//register_shutdown_function('custom_shutdown');
+//function custom_shutdown(){
+//     print_r(error_get_last());
+//    echo"<script>alert(\"buxu guanbi\");</script>";
+//}
+?>
+<p>
+    <span class='red'>注册一个shutdown函数 </span> 
+    <span>register_shutdown_function(函数名);<br/></span>
+</p>
+<p>
+    <span class='red'>判断2个表达式是否不同时为真 Xor<br/></span> 
+    <span>echo (1 Xor 0)? "true" : "false"; 结果
+        <span class="blue"><?php echo (1 Xor 0)? "true" : "false"; ?></span><br/></span>
+    <span>echo (1 Xor 2)? "true" : "false"; 结果
+        <span class="red"><?php echo (1 Xor 2)? "true" : "false"; ?></span><br/></span>
+</p>
+<?php
 $end;
 ?>
-</article>
-</body>
 <script>
 <?php echo $cookie_js;
 ?>
@@ -1055,5 +1358,6 @@ $end;
         }, 3000);
     }
 </script>
-</html>
+<?php
+require('./include/footer.inc.php');
 
