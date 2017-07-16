@@ -906,9 +906,9 @@ echo '<span class="red mar_l_30">自动加载类</span>spl_autoload_register(函
 $info = new ReflectionClass(get_class($pig1));
 echo '<span class="red mar_l_30">类的反射API</span>ReflectionClass 类: 前面$pig1的原始类文件不在当前脚本中.<br/>'
  . '使用 $info= new ReflectionClass(get_class($pig1));echo $info;= '
- . '<span class="purple"> 太长不写 this以及此api常用功能 用放在console里了</span><br/><br/><span id="hidden">' . $info . '</span>';
+ . '<span class="purple"> 太长不写 this以及此api常用功能 用放在console里了</span><br/><span id="hidden">' . $info . '</span>';
 require 'include/reflection_api_mes.inc.php';
-echo '<script>var info =document.getElementById( \'hidden\').innerText,refl="' . $reflection_api_mes
+echo '<script>var info =document.getElementById( \'hidden\').innerHTML,refl="' . $reflection_api_mes
  . '";console.log("++++++++++++++++++++这是$pig1的类信息++++++++++++++++++++\n"'
  . '+info+"--------------------$pig1类信息结束--------------------\n'
  . '++++++++++++++++++++这是反射api基础的的信息++++++++++++++++++++\n"+refl+'
@@ -1262,14 +1262,16 @@ echo '<hr/>';
     <span>fwrite(STDOUT, "Hello, $name!");<br/></span>
     <span class='red'>字符串压缩 解压缩<br/></span>
     <span>$compressed = gzcompress('Compresjdfhjskdhfjksdhfjkhsdfjkhsdfjkhjsdfhjksdhfjkss me');<br/></span>
-    <span>echo gzuncompress($compressed);<br/></span>
+    <?php $compressed = gzcompress('Compresjdfhjskdhfjksdhfjkhsdfjkhsdfjkhjsdfhjksdhfjkss me'); ?>
+    <span>echo $compressed; : <?= $compressed; ?><br/></span>
+    <span>echo gzuncompress($compressed); : <?= gzuncompress($compressed); ?><br/></span>
     <span class='purple'>默认压缩级别是6 ,据网友测试,压缩率有百分之80<br/></span>
     <span class='red'>获取对应域名的ip地址 gethostbyname()<br/></span>
-    <span>www.baidu.com的ip地址是gethostbyname('www.baidu.com')  : <?php gethostbyname('www.baidu.com'); ?><br/></span>
+    <span>www.baidu.com的ip地址是gethostbyname('www.baidu.com')  : <?= gethostbyname('www.baidu.com'); ?><br/></span>
     <span class='red'>将ipv4地址字符串转换为int型 ip2long($ip)<br/></span>
     <span>ip2long('180.97.33.108') = <?php echo ip2long('180.97.33.108'); ?><br/></span>
-    <span class='red'>将int型ipv4地址转换为字符串 longip2($ip)<br/></span>
-    <span>longip2(3026264428) = <?php echo long2ip(3026264428); ?><br/></span>
+    <span class='red'>将int型ipv4地址转换为字符串 long2ip($ip)<br/></span>
+    <span>long2ip(3026264428) = <?php echo long2ip(3026264428); ?><br/></span>
 </p><hr/>
 <p>
     <span class='red'>显示或屏蔽错误 error_report();<br/></span>
@@ -1340,9 +1342,9 @@ echo '<hr/>';
 <p>
     <span class='red'>判断2个表达式是否不同时为真 Xor<br/></span> 
     <span>echo (1 Xor 0)? "true" : "false"; 结果
-        <span class="blue"><?php echo (1 Xor 0)? "true" : "false"; ?></span><br/></span>
+        <span class="blue"><?php echo (1 Xor 0) ? "true" : "false"; ?></span><br/></span>
     <span>echo (1 Xor 2)? "true" : "false"; 结果
-        <span class="red"><?php echo (1 Xor 2)? "true" : "false"; ?></span><br/></span>
+        <span class="red"><?php echo (1 Xor 2) ? "true" : "false"; ?></span><br/></span>
 </p>
 <?php
 $end;
