@@ -403,7 +403,7 @@ func1(520, 13, 14);
 echo '</p><hr/>';
 $glo = '111';
 function func2() {
-    $temp1 = $GLOBALS['glo'];
+    $temp1 = &$GLOBALS['glo'];
     global $glo;
     $glo = '222';
     return $temp1;
